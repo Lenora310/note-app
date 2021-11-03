@@ -2,12 +2,13 @@ import React, { useReducer } from "react";
 import axios from "axios";
 import { FirebaseContext } from "./firebaseContext";
 import { firebaseReducer } from "./firebaseReducer";
-import { SHOW_LOADER, ADD_NOTE, FETCH_NOTES, REMOVE_NOTE } from "../types";
+import { SHOW_LOADER, ADD_NOTE, FETCH_NOTES, REMOVE_NOTE, ADD_BOOK } from "../types";
 
 const url = process.env.REACT_APP_DB_URL;
 
 export const FirebaseState = ({ children }) => {
   const initialState = {
+    books: [],
     notes: [],
     loading: false,
   };
@@ -31,6 +32,8 @@ export const FirebaseState = ({ children }) => {
       payload,
     });
   };
+
+
   const addNote = async (title) => {
     const note = {
       title,
@@ -60,6 +63,29 @@ export const FirebaseState = ({ children }) => {
     });
   };
 
+
+  const addBook = async (title) => {
+    const book = {
+      title,
+      date: new Date().toJSON(),
+    };
+
+    try {
+      const res = await axios.post(`${url}/books.json`, book);
+      console.log("addBook", res.data);
+      const payload = {
+        ...book,
+        id: res.data.name,
+      };
+      dispatch({
+        type: ADD_BOOK,
+        payload,
+      });
+    } catch (e) {
+      throw new Error(e.message);
+    }
+  };
+
   return (
     <FirebaseContext.Provider
       value={{
@@ -67,8 +93,10 @@ export const FirebaseState = ({ children }) => {
         addNote,
         removeNote,
         fetchNotes,
+        addBook,
         loading: state.loading,
         notes: state.notes,
+        books: state.books
       }}
     >
       {children}

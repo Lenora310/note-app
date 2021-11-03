@@ -6,7 +6,7 @@ import { Navbar } from "./components/Navbar";
 import { Alert } from "./components/Alert";
 import { AlertState } from "./context/alert/AlertState";
 import { FirebaseState } from "./context/firebase/FirebaseState";
-import { Book } from "./components/Book";
+import { BookNavigation } from "./components/books/BookNavigation";
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
             <Switch>
               <Route path={"/"} exact component={Home} />
               <Route path={"/about"} component={About} />
-              <Route path={"/books"} component={Book} />
+              <Route path={"/books"} component={BookNavigation} />
             </Switch>
           </div>
         </BrowserRouter>
