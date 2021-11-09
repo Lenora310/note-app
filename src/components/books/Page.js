@@ -1,24 +1,24 @@
-import React, { Component } from 'react'
+import React from 'react';
 
-export default class Page extends Component {
-    constructor(props) {
-        super(props)
-    
-        this.state = {
-             
-        }
-    }
-    
-    render() {
+export const Page = (props) => {
+
+    if(props.isCover){
         return (
             <div>
-                <h1>{this.props.pageName} {this.props.pageNumber}</h1>
-                <h3>Date</h3>
-                <h3>City</h3>
-                <h3>Weather</h3>
-                <h3>Note</h3>
-                <h3>Photo</h3>
+                <h2>I am your book cover</h2>
             </div>
         )
     }
+
+    return (
+        <div>
+            <h1>{props.pageName} {props.pageNumber}</h1>
+            <h3>Date</h3>
+            <h3>City</h3>
+            <h3>Weather</h3>
+            <h3>Note</h3>
+            <h3>Photo</h3>
+        </div>
+    )
 }
+

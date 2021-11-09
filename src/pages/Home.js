@@ -1,37 +1,54 @@
 import React, { Fragment, useEffect, useContext } from "react";
-import { Form } from "../components/Form";
+import { BookList } from "../components/books/BookList";
+import { BookForm } from "../components/form/BookForm";
+import { NoteForm } from "../components/form/NoteForm";
 import { Loader } from "../components/Loader";
 import { Notes } from "../components/Notes";
-import {FirebaseContext} from '../context/firebase/firebaseContext'
-
+import { FirebaseContext } from "../context/firebase/firebaseContext";
 
 export const Home = () => {
-   
-  const {loading, notes, fetchNotes, removeNote} = useContext(FirebaseContext)
+  // const { loading, notes, fetchNotes, removeNote, books, fetchBooks } =
+  //   useContext(FirebaseContext);
+  const { loading, books, fetchBooks } =
+    useContext(FirebaseContext);
 
-  useEffect( ()=> {
-    fetchNotes()
+  useEffect(() => {
+    // fetchNotes();
+    fetchBooks();
     //eslint-disable-next-line
-  }, [])
+  }, []);
 
   const handler = () => {
-    console.log("Hello, I am note!")
-  } 
+    console.log("Hello, I am note!");
+  };
   return (
     <div onClick={handler}>
       <Fragment>
-      <Form></Form>
-      <hr />
+        {/* <h3>Note form</h3>
+        <NoteForm></NoteForm> */}
+        <h3>Book form</h3>
+        <BookForm/>
+        <hr />
 
-      {loading
-      ? <Loader/>
-      :<Notes notes={notes} onRemove={removeNote} ></Notes>
-      }
+        {/* {loading ? (
+          <Loader />
+        ) : (
+          <Notes notes={notes} onRemove={removeNote}></Notes>
+        )}
+        
+        <hr /> */}
 
-      
-    </Fragment>
+
+        {loading ? (
+          <Loader />
+        ) : (
+          <BookList books={books} />
+        )}
+
+        
+
+        
+      </Fragment>
     </div>
-    
   );
 };
- 

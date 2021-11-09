@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react";
-import { AlertContext } from "../context/alert/alertContext";
-import { FirebaseContext } from "../context/firebase/firebaseContext";
+import { AlertContext } from "../../context/alert/alertContext";
+import { FirebaseContext } from "../../context/firebase/firebaseContext";
 
-export const Form = () => {
+export const BookForm = () => {
   const [value, setValue] = useState("");
   const alert = useContext(AlertContext);
   const firebase = useContext(FirebaseContext);
@@ -10,8 +10,8 @@ export const Form = () => {
   const submitHandler = (event) => {
     event.preventDefault();
     if (value.trim()) {
-      firebase.addNote(value.trim()).then( () => {
-          alert.show("Note was created", "success");
+      firebase.addBook(value.trim()).then( () => {
+          alert.show("Book was created", "success");
       }).catch( () => {
         alert.show("Something went wrong", "danger");
       })
@@ -26,7 +26,7 @@ export const Form = () => {
         <input
           type="text"
           className="form-control"
-          placeholder="Write note name"
+          placeholder="Write book name"
           value={value}
           onChange={(event) => setValue(event.target.value)}
         ></input>
