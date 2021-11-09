@@ -13,7 +13,9 @@ export const BookList = ({ books }) => {
                 &nbsp;&nbsp;
                 <small>{book.id}</small>
                 &nbsp;&nbsp;
-                <small>{book.pages}</small>
+                {book.pages.map(page => (<small>{page.title} &nbsp;</small>))}
+
+                {/* <small>{book.pages.title}</small> */}
               </div>
             </li>
           </Link>

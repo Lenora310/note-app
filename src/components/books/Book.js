@@ -56,7 +56,7 @@ export const Book = (props) => {
       <h1>I am a book with id {id} </h1>
       <button onClick={previousPage}>Previous</button>
       <Page
-        pageName={pages[currentPage]}
+        pageName={pages[currentPage].title}
         pageNumber={currentPage}
       />
       <button onClick={nextPage}>Next</button>
@@ -64,9 +64,9 @@ export const Book = (props) => {
       <br />
       <button onClick={addPage}>Add new page</button>
 
-       <p>
+       {/* <p>
           {pages}
-      </p> 
+      </p>  */}
 
       <Modal show={showModal} onHide={hideModal}>
         <Modal.Header>

@@ -75,7 +75,20 @@ export const FirebaseState = ({ children }) => {
     const book = {
       title,
       date: new Date().toJSON(),
-      pages: ["First City", "Second City"]//new Map().set('Mmh000', 'Samara')//.set('Mmh000', {title: "Samara"}).set('Mmh001', {title: "Moscow"})
+      pages: [{
+        id:'Mmh000',
+        title: 'Moscow',
+        elements: '',
+        type: 'travel' 
+      },
+      {
+        id:'Kmn001',
+        title: 'Samara',
+        elements: '',
+        type: 'travel' 
+      }]
+      
+      //"First City", "Second City"]//new Map().set('Mmh000', 'Samara')//.set('Mmh000', {title: "Samara"}).set('Mmh001', {title: "Moscow"})
     };
 
     // console.log("ADD BOOK with book:")
