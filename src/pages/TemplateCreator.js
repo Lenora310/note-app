@@ -16,31 +16,41 @@ export const TemplateCreator = () => {
   const prevState = useRef({ selected, hovered });
 
   useEffect(() => {
-    
-    console.log("selected=", selected);
-    console.log("prevState.current.selected=", prevState.current.selected);
-
     const prevSelEl = document.getElementById(prevState.current.selected);
-    const prevSelLayer = document.getElementById(prevState.current.selected + "-layer");
+    const prevSelLayer = document.getElementById(
+      prevState.current.selected + "-layer"
+    );
     const selEl = document.getElementById(selected);
     const selLayer = document.getElementById(selected + "-layer");
 
-    console.log("prevSelEl=", prevSelEl);
-    console.log("prevSelLayer=", prevSelLayer);
-    console.log("selEl=", selEl);
-    console.log("selLayer=", selLayer);
-
-    prevSelEl.style.backgroundColor = "white";
-    prevSelLayer.style.color = "black";
+    prevSelEl.style.removeProperty("background-color");
+    prevSelLayer.style.removeProperty("color");
 
     selEl.style.backgroundColor = "green";
     selLayer.style.color = "green";
+
     prevState.current.selected = selected;
   }, [selected]);
 
-  // useEffect(() => {
-  //   prevState.current.hovered = hovered;
-  // }, [hovered]);
+  useEffect(() => {
+    const prevHovEl = document.getElementById(prevState.current.hovered);
+    const prevHovLayer = document.getElementById(
+      prevState.current.hovered + "-layer"
+    );
+    const hovEl = document.getElementById(hovered);
+    const hovLayer = document.getElementById(hovered + "-layer");
+
+    prevHovEl.removeAttribute("style.border");
+    prevHovLayer.removeAttribute("style.border");
+
+    prevHovEl.style.removeProperty("border");
+    prevHovLayer.style.removeProperty("border");
+
+    hovEl.style.border = "dashed blue";
+    hovLayer.style.border = "dashed blue";
+
+    prevState.current.hovered = hovered;
+  }, [hovered]);
 
   function addElement(parentId, elementTag, elementId, html) {
     let parentElement = document.getElementById(parentId);
