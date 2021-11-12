@@ -13,43 +13,33 @@ export const TemplateCreator = () => {
   console.log("rendering...");
   // console.log("rendering... elements=", elements);
 
-  function usePrevious(value) {
-    console.log("value=", value);
-    const ref = useRef(value);
-    useEffect(() => {
-      console.log("useEffect...");
-      ref.current = value;
-      console.log("Use effect ref=", ref);
-    });
-    console.log(" usePrevious ref=", ref);
-    return ref.current;
-  }
-  const prevState = usePrevious({ selected, hovered });
+  const prevState = useRef({ selected, hovered });
 
   useEffect(() => {
-    if (selected) {
-      // console.log("prevState=", prevState);
-      const prevSelEl = document.getElementById(prevState.selected);
-      const prevSelLayer = document.getElementById(
-        prevState.selected + "-layer"
-      );
-      const selEl = document.getElementById(selected);
-      const selLayer = document.getElementById(selected + "-layer");
+    
+    console.log("selected=", selected);
+    console.log("prevState.current.selected=", prevState.current.selected);
 
-      console.log("prevSelEl=", prevSelEl);
-      console.log("prevSelLayer=", prevSelLayer);
-      console.log("selEl=", selEl);
-      console.log("selLayer=", selLayer);
+    const prevSelEl = document.getElementById(prevState.current.selected);
+    const prevSelLayer = document.getElementById(prevState.current.selected + "-layer");
+    const selEl = document.getElementById(selected);
+    const selLayer = document.getElementById(selected + "-layer");
 
-      prevSelEl.style.backgroundColor = "white";
-      prevSelLayer.style.color = "black";
+    console.log("prevSelEl=", prevSelEl);
+    console.log("prevSelLayer=", prevSelLayer);
+    console.log("selEl=", selEl);
+    console.log("selLayer=", selLayer);
 
-      selEl.style.backgroundColor = "green";
-      selLayer.style.color = "green";
-    }
+    prevSelEl.style.backgroundColor = "white";
+    prevSelLayer.style.color = "black";
+
+    selEl.style.backgroundColor = "green";
+    selLayer.style.color = "green";
+    prevState.current.selected = selected;
   }, [selected]);
-  // useEffect(() => {
 
+  // useEffect(() => {
+  //   prevState.current.hovered = hovered;
   // }, [hovered]);
 
   function addElement(parentId, elementTag, elementId, html) {
