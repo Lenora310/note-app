@@ -11,7 +11,7 @@ export const Navbar = () => (
                 <NavLink className="nav-link" to="/" exact>Main</NavLink>
             </li> 
             <li className="nav-item">
-                <NavLink className="nav-link" to="/about">Information </NavLink> 
+                <NavLink className="nav-link" to="/template_creator">New template </NavLink> 
             </li>
         </ul>
 
