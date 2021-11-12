@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Button, Container, Row, Col } from "react-bootstrap";
 
 export const TemplateCreator = () => {
-  const draftId = 2345;
+  const draftId = 2345; //todo change the constant
 
   const [elements, setElements] = useState([
     { parentId: 0, elementTag: "div", elementId: draftId, html: "div element" },
@@ -26,7 +26,7 @@ export const TemplateCreator = () => {
     prevSelEl.style.removeProperty("background-color");
     prevSelLayer.style.removeProperty("color");
 
-    selEl.style.backgroundColor = "green";
+    selEl.style.backgroundColor = "rgba(0,255,0,0.2)";
     selLayer.style.color = "green";
 
     prevState.current.selected = selected;
@@ -46,8 +46,8 @@ export const TemplateCreator = () => {
     prevHovEl.style.removeProperty("border");
     prevHovLayer.style.removeProperty("border");
 
-    hovEl.style.border = "dashed blue";
-    hovLayer.style.border = "dashed blue";
+    hovEl.style.border = "dashed rgba(0,0,255,0.5)";
+    hovLayer.style.border = "dashed rgba(0,0,255,0.5)";
 
     prevState.current.hovered = hovered;
   }, [hovered]);
@@ -67,10 +67,12 @@ export const TemplateCreator = () => {
     return id;
   };
 
+  const addH1 = () => {};
+
   return (
     <Container fluid>
       <Row className="template-creator-row">
-        <Col className="template-creator-column">
+        <Col className="template-creator-column add-tools">
           <Button
             onClick={() => addElement(draftId, "h1", getNewId(), "random text")}
           >
@@ -84,29 +86,42 @@ export const TemplateCreator = () => {
           <Button onClick={() => addElement(draftId, "h3", getNewId(), "h3")}>
             Add h3
           </Button>
+          <Button
+            onClick={() => addElement(draftId, "p", getNewId(), "paragraph")}
+          >
+            Add paragraph
+          </Button>
         </Col>
 
-        <Col className="template-creator-column">
+        <Col className="col-8 template-creator-column draft">
           Draft
           <div id={draftId}></div>
         </Col>
 
-        <Col className="template-creator-column">
-          <strong> Layers </strong>
-          <ul>
-            {elements.map((el) => (
-              <li id={el.elementId + "-layer"} key={el.elementId}>
-                <p
+        <Col className="template-creator-column layers">
+          <div className="card">
+            <div class="card-header">
+              <strong> Layers </strong>
+            </div>
+
+            <ul className="list-group list-group-flush">
+              {elements.map((el) => (
+                <li
+                  className="list-group-item"
+                  id={el.elementId + "-layer"}
+                  key={el.elementId}
                   onClick={() => setSelected(el.elementId)}
                   onMouseEnter={() => setHovered(el.elementId)}
                 >
-                  <strong>
-                    {el.elementId} &nbsp; {el.html}{" "}
-                  </strong>
-                </p>
-              </li>
-            ))}
-          </ul>
+                  <p>
+                    <strong>
+                      {el.elementId} &nbsp; {el.html}{" "}
+                    </strong>
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
         </Col>
       </Row>
     </Container>
