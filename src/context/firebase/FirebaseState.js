@@ -12,6 +12,7 @@ import {
   REMOVE_BOOK,
   ADD_PAGE,
   ADD_TEMPLATE,
+  FETCH_TEMPLATES,
 } from "../types";
 
 const url = process.env.REACT_APP_DB_URL;
@@ -73,6 +74,23 @@ export const FirebaseState = ({ children }) => {
     });
   };
 
+  const fetchTemplates = async () => {
+    showLoader();
+    const res = await axios.get(`${url}/templates.json`);
+
+    const payload = Object.keys(res.data).map((key) => {
+      return {
+        ...res.data[key],
+        id: key,
+      };
+    });
+
+    dispatch({
+      type: FETCH_TEMPLATES,
+      payload,
+    });
+  };
+
   const addTemplate = async (templateTitle, elements) => {
     const template = {
       title: templateTitle,
@@ -94,26 +112,26 @@ export const FirebaseState = ({ children }) => {
     }
   };
 
-  const addBook = async (title) => {
+  const addBook = async (title, template) => {
     const book = {
       title,
       date: new Date().toJSON(),
-      pages: [
-        {
-          id: "Mmh000",
-          title: "Moscow",
-          elements: "",
-          type: "travel",
-        },
-        {
-          id: "Kmn001",
-          title: "Samara",
-          elements: "",
-          type: "travel",
-        },
-      ],
-
-      //"First City", "Second City"]//new Map().set('Mmh000', 'Samara')//.set('Mmh000', {title: "Samara"}).set('Mmh001', {title: "Moscow"})
+      pages: [],
+      // [
+      //   {
+      //     id: "Mmh000",
+      //     title: "Moscow",
+      //     elements: "",
+      //     type: "travel",
+      //   },
+      //   {
+      //     id: "Kmn001",
+      //     title: "Samara",
+      //     elements: "",
+      //     type: "travel",
+      //   },
+      // ],
+      template
     };
 
     // console.log("ADD BOOK with book:")
@@ -197,6 +215,8 @@ export const FirebaseState = ({ children }) => {
         addPage,
 
         addTemplate,
+        fetchTemplates,
+        templates: state.templates,
       }}
     >
       {children}

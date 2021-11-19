@@ -11,9 +11,10 @@ export const BookList = ({ books }) => {
               <div>
                 <strong>{book.title}</strong>
                 &nbsp;&nbsp;
+                {console.log(book.title, " ",book.id)}
                 <small>{book.id}</small>
                 &nbsp;&nbsp;
-                {book.pages.map(page => (<small>{page.title} &nbsp;</small>))}
+                {/* {book.pages.map(page => (<small>{page.title} &nbsp;</small>))} */}
 
                 {/* <small>{book.pages.title}</small> */}
               </div>

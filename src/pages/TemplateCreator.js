@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import { AlertContext } from "../context/alert/alertContext";
 import { FirebaseContext } from "../context/firebase/firebaseContext";
-import { TemplateTitleForm } from "../components/form/TemplateTitleForm";
+import { Form } from "../components/form/Form";
 // import Collapse from 'react-bootstrap/Collapse'
 // import { Collapse } from bootstrap
 
@@ -119,7 +119,7 @@ export const TemplateCreator = () => {
   return (
     <div>
       <h3>{title}</h3>
-      <TemplateTitleForm
+      <Form
         saveValue={setTitle}
         placeholder="Write template title"
       />
@@ -130,7 +130,7 @@ export const TemplateCreator = () => {
           <Col className="template-creator-column add-tools">
             <Button onClick={() => setshowH1input(!showH1input)}>Add h1</Button>
             {showH1input ? (
-              <TemplateTitleForm
+              <Form
                 id="addH1Form"
                 saveValue={addH1Handler}
                 placeholder="Write title"
@@ -144,7 +144,7 @@ export const TemplateCreator = () => {
             </Button>
             <Button onClick={() => setshowH3input(!showH3input)}>Add h3</Button>
             {showH3input ? (
-              <TemplateTitleForm
+              <Form
                 id="addH3Form"
                 saveValue={addH3Handler}
                 placeholder="Write h3 title"

@@ -1,4 +1,4 @@
-import { SHOW_LOADER, ADD_NOTE, FETCH_NOTES, REMOVE_NOTE, ADD_BOOK, FETCH_BOOKS, ADD_PAGE, ADD_TEMPLATE } from "../types";
+import { SHOW_LOADER, ADD_NOTE, FETCH_NOTES, REMOVE_NOTE, ADD_BOOK, FETCH_BOOKS, ADD_PAGE, ADD_TEMPLATE, FETCH_TEMPLATES } from "../types";
 
 const handlers = {
   [SHOW_LOADER]: (state) => ({ ...state, loading: true }),
@@ -32,6 +32,7 @@ const handlers = {
     ...state,
     templates: [...state.templates, payload],
   }),
+  [FETCH_TEMPLATES]: (state, { payload }) => ({ ...state, templates: payload , loading: false}),
 
   DEFAULT: (state) => state
 };

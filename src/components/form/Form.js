@@ -1,12 +1,10 @@
 import React, { useState, useContext } from "react";
 import { AlertContext } from "../../context/alert/alertContext";
-// import { FirebaseContext } from "../../context/firebase/firebaseContext";
 
 
-export const TemplateTitleForm = ({saveValue, placeholder}) => {
+export const Form = ({saveValue, placeholder}) => {
   const [value, setValue] = useState("");
   const alert = useContext(AlertContext);
-//   const firebase = useContext(FirebaseContext);
 
   const submitHandler = (event) => {
     event.preventDefault();
