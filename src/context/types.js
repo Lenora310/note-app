@@ -12,3 +12,5 @@ export const FETCH_BOOKS = 'FETCH_BOOKS'
 export const REMOVE_BOOK = 'REMOVE_BOOK'
 
 export const ADD_PAGE = 'ADD_PAGE'
+
+export const ADD_TEMPLATE = 'ADD_TEMPLATE'

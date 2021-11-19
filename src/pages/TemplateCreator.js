@@ -10,6 +10,7 @@ export const TemplateCreator = () => {
   const draftId = 2345; //todo change the constant
 
   const firebase = useContext(FirebaseContext);
+  const alert = useContext(AlertContext);
 
   const [title, setTitle] = useState("");
   const [elements, setElements] = useState([
@@ -105,7 +106,14 @@ export const TemplateCreator = () => {
     setshowH3input(false);
   };
   const saveTemplate = () => {
-    
+    firebase
+      .addTemplate(title, elements)
+      .then(() => {
+        alert.show("Template was created", "success");
+      })
+      .catch(() => {
+        alert.show("Something went wrong", "danger");
+      });
   };
 
   return (
