@@ -19,6 +19,7 @@ export const NoteForm = () => {
     } else {
       alert.show("Enter text");
     }
+    setValue("");
   };
   return (
     <form onSubmit={submitHandler}>
