@@ -19,6 +19,7 @@ export const BookForm = () => {
     } else {
       alert.show("Enter text");
     }
+    setValue("");
   };
   return (
     <form onSubmit={submitHandler}>
