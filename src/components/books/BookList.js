@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export const BookList = ({ books }) => {
+  
   return (
     <div>
       <ul>
@@ -11,9 +12,9 @@ export const BookList = ({ books }) => {
               <div>
                 <strong>{book.title}</strong>
                 &nbsp;&nbsp;
-                {console.log(book.title, " ",book.id)}
+                {/* {console.log(book.title, " ",book.id)}
                 <small>{book.id}</small>
-                &nbsp;&nbsp;
+                &nbsp;&nbsp; */}
                 {/* {book.pages.map(page => (<small>{page.title} &nbsp;</small>))} */}
 
                 {/* <small>{book.pages.title}</small> */}

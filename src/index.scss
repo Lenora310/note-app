@@ -36,3 +36,10 @@ code {
 .instruction {
   color: green;
 }
+.template-creator-column .list-group-item{
+  z-index: 1;
+}
+.template-creator-column .list-group-item .btn-close{
+  z-index: 2;
+}
+

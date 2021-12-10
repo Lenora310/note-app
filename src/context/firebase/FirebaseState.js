@@ -10,7 +10,7 @@ import {
   ADD_BOOK,
   FETCH_BOOKS,
   REMOVE_BOOK,
-  ADD_PAGE,
+  ADD_BOOK_PAGE,
   ADD_TEMPLATE,
   FETCH_TEMPLATES,
 } from "../types";
@@ -103,6 +103,7 @@ export const FirebaseState = ({ children }) => {
         ...template,
         id: res.data.name,
       };
+
       dispatch({
         type: ADD_TEMPLATE,
         payload,
@@ -112,30 +113,51 @@ export const FirebaseState = ({ children }) => {
     }
   };
 
+  const addPageValue = (bookId, pageNumber, elementId, value) => {
+    
+  };
+
+  const addBookPage = async (bookId) => {
+
+    const page = {
+      // values:{inputId:"notInputActually"}
+      values:{inputId:"Meme bebe"}
+    };
+    try {
+      const pageRes = await axios.post(`${url}/books/${bookId}/pages.json`, page);
+      console.log("addPage", pageRes);
+      // const pagesRes = await axios.get(`${url}/books/${bookId}/pages.json`);
+      // console.log("pagesRes", pagesRes);
+      
+      const payload = {
+        pageId: pageRes.data.name,
+        page,
+        bookId
+      };
+      console.log("payload", payload);
+      console.log("books do dispatch=", state.books);
+      
+      dispatch({
+        type: ADD_BOOK_PAGE,
+        payload,
+      });
+      console.log("books PO dispatch=", state.books);
+    } catch (e) {
+      throw new Error(e.message);
+    }
+  };
+
+  
+
   const addBook = async (title, template) => {
     const book = {
       title,
       date: new Date().toJSON(),
-      pages: [],
-      // [
-      //   {
-      //     id: "Mmh000",
-      //     title: "Moscow",
-      //     elements: "",
-      //     type: "travel",
-      //   },
-      //   {
-      //     id: "Kmn001",
-      //     title: "Samara",
-      //     elements: "",
-      //     type: "travel",
-      //   },
-      // ],
+      // pages: [{values:[]}],
+      // pages: [],
       template
     };
 
-    // console.log("ADD BOOK with book:")
-    // console.log(book)
     try {
       const res = await axios.post(`${url}/books.json`, book);
       console.log("addBook", res.data);
@@ -180,28 +202,7 @@ export const FirebaseState = ({ children }) => {
     });
   };
 
-  const addPage = async (id, title) => {
-    const page = {
-      title,
-    };
-
-    try {
-      const res = await axios.post(`${url}/books/${id}/pages.json`, page);
-      console.log("addPage", res.data);
-      const payload = {
-        ...page,
-        bookId: id,
-        pageId: res.data.name,
-      };
-      dispatch({
-        type: ADD_PAGE,
-        payload,
-      });
-    } catch (e) {
-      throw new Error(e.message);
-    }
-  };
-
+  
   return (
     <FirebaseContext.Provider
       value={{
@@ -212,7 +213,7 @@ export const FirebaseState = ({ children }) => {
         fetchBooks,
         removeBook,
         books: state.books,
-        addPage,
+        addBookPage,
 
         addTemplate,
         fetchTemplates,

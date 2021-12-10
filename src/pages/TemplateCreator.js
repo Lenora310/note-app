@@ -3,6 +3,8 @@ import { Button, Container, Row, Col } from "react-bootstrap";
 import { AlertContext } from "../context/alert/alertContext";
 import { FirebaseContext } from "../context/firebase/firebaseContext";
 import { Form } from "../components/form/Form";
+import { addPageElement } from "../utilities/addPageElement";
+import { PARENTID } from "../context/types";
 // import Collapse from 'react-bootstrap/Collapse'
 // import { Collapse } from bootstrap
 
@@ -13,9 +15,14 @@ export const TemplateCreator = () => {
   const alert = useContext(AlertContext);
 
   const [title, setTitle] = useState("");
-  const [elements, setElements] = useState([
-    { parentId: 0, elementTag: "div", elementId: draftId, html: "div element" },
-  ]);
+  const elementsInit = 
+    { parentId: PARENTID, elementTag: "div", elementId: draftId, html: "" };
+  const [elements, setElements] = useState([elementsInit]);
+
+  // useEffect(() => {
+  //   console.log("elements=", elements);
+  // });
+
   const [id, setId] = useState(100);
   const [selected, setSelected] = useState(draftId);
   const [hovered, setHovered] = useState(draftId);
@@ -26,6 +33,11 @@ export const TemplateCreator = () => {
   const [showH1input, setshowH1input] = useState(false);
 
   const prevState = useRef({ selected, hovered });
+  useEffect(() => {
+    if(elements.length===0){
+      addElement(elementsInit.parentId, elementsInit.elementTag,elementsInit.elementId, elementsInit.html);
+    }
+  }, [elements])
 
   useEffect(() => {
     const prevSelEl = document.getElementById(prevState.current.selected);
@@ -35,8 +47,10 @@ export const TemplateCreator = () => {
     const selEl = document.getElementById(selected);
     const selLayer = document.getElementById(selected + "-layer");
 
-    prevSelEl.style.removeProperty("background-color");
-    prevSelLayer.style.removeProperty("color");
+    if (prevSelEl && prevSelLayer) {
+      prevSelEl.style.removeProperty("background-color");
+      prevSelLayer.style.removeProperty("color");
+    }
 
     selEl.style.backgroundColor = "rgba(0,255,0,0.2)";
     selLayer.style.color = "green";
@@ -52,11 +66,10 @@ export const TemplateCreator = () => {
     const hovEl = document.getElementById(hovered);
     const hovLayer = document.getElementById(hovered + "-layer");
 
-    prevHovEl.removeAttribute("style.border");
-    prevHovLayer.removeAttribute("style.border");
-
-    prevHovEl.style.removeProperty("border");
-    prevHovLayer.style.removeProperty("border");
+    if (prevHovEl && prevHovLayer) {
+      prevHovEl.style.removeProperty("border");
+      prevHovLayer.style.removeProperty("border");
+    }
 
     hovEl.style.border = "dashed rgba(0,0,255,0.5)";
     hovLayer.style.border = "dashed rgba(0,0,255,0.5)";
@@ -64,31 +77,29 @@ export const TemplateCreator = () => {
     prevState.current.hovered = hovered;
   }, [hovered]);
 
-  // useEffect(() => {
-  //   // const prevHovEl = document.getElementById(prevState.current.hovered);
-  //   // const prevHovLayer = document.getElementById(
-  //   //   prevState.current.hovered + "-layer"
-  //   // );
-  //   // const hovEl = document.getElementById(hovered);
-  //   // const hovLayer = document.getElementById(hovered + "-layer");
-  //   // prevHovEl.removeAttribute("style.border");
-  //   // prevHovLayer.removeAttribute("style.border");
-  //   // prevHovEl.style.removeProperty("border");
-  //   // prevHovLayer.style.removeProperty("border");
-  //   // hovEl.style.border = "dashed rgba(0,0,255,0.5)";
-  //   // hovLayer.style.border = "dashed rgba(0,0,255,0.5)";
-  //   // prevState.current.hovered = hovered;
-  // }, [elements]);
-
-  function addElement(parentId, elementTag, elementId, html) {
-    let parentElement = document.getElementById(parentId);
-    let elementToAdd = document.createElement(elementTag);
-    elementToAdd.setAttribute("id", elementId);
-    elementToAdd.innerHTML = html;
-    parentElement.appendChild(elementToAdd);
-
+  const addElement = (parentId, elementTag, elementId, html) => {
+    addPageElement(parentId, elementTag, elementId, html);
     setElements([...elements, { parentId, elementTag, elementId, html }]);
-  }
+  };
+
+  const deleteElement = (event, elementId) => {
+    event.stopPropagation();
+    document.getElementById(elementId).remove();
+    setElements(elements.filter(el => el.elementId!==elementId && el.parentId!==elementId));
+    // setElements(elements.filter(el => el.elementId!==elementId));
+    // console.log("newElements=",elements)
+    // if (elementId === draftId) {
+    //   // setElements(elementsInit);
+    //   // addElement(elementsInit[0].parentId, elementsInit[0].elementTag,elementsInit[0].elementId, elementsInit[0].html);
+    // }
+    // setElements(elements.filter((el) => el.elementId !== elementId));
+
+    // let newElements=elements.filter(el => el.elementId!==elementId && el.parentId!==elementId);
+
+    // console.log("newElements=",newElements)
+
+    //  console.log("element with id=",elementId, " was deleted");
+  };
 
   const getNewId = () => {
     setId(id + 1);
@@ -119,10 +130,7 @@ export const TemplateCreator = () => {
   return (
     <div>
       <h3>{title}</h3>
-      <Form
-        saveValue={setTitle}
-        placeholder="Write template title"
-      />
+      <Form saveValue={setTitle} placeholder="Write template title" />
       <Button onClick={() => saveTemplate()}>Save template</Button>
 
       <Container fluid>
@@ -160,12 +168,14 @@ export const TemplateCreator = () => {
 
           <Col className="col-8 template-creator-column draft">
             Draft
-            <div id={draftId}></div>
+            <div id={PARENTID}>
+              <div id={draftId}></div>
+            </div>
           </Col>
 
           <Col className="template-creator-column layers">
             <div className="card">
-              <div class="card-header">
+              <div className="card-header">
                 <strong> Layers </strong>
               </div>
 
@@ -175,14 +185,28 @@ export const TemplateCreator = () => {
                     className="list-group-item"
                     id={el.elementId + "-layer"}
                     key={el.elementId}
-                    onClick={() => setSelected(el.elementId)}
-                    onMouseEnter={() => setHovered(el.elementId)}
+                    onClick={() => {
+                      console.log("li with id=", el.elementId, "clicked");
+                      setSelected(el.elementId);
+                    }}
+                    onMouseEnter={() => {
+                      console.log("li hover was changed to ", el.elementId);
+                      setHovered(el.elementId);
+                    }}
                   >
-                    <p>
-                      <strong>
-                        {el.elementId} &nbsp; {el.html}{" "}
-                      </strong>
-                    </p>
+                    {/* <p> */}
+                    <strong>
+                      {el.elementId} &nbsp; {el.html}{" "}
+                    </strong>
+                    {/* </p> */}
+                    <button
+                      type="button"
+                      className="btn-close"
+                      aria-label="Close"
+                      onClick={(event) => {
+                        deleteElement(event, el.elementId);
+                      }}
+                    ></button>
                   </li>
                 ))}
               </ul>
