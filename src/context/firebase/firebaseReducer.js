@@ -12,25 +12,27 @@ import {
 
 const handlers = {
   [SHOW_LOADER]: (state) => ({ ...state, loading: true }),
-  [ADD_NOTE]: (state, { payload }) => ({
-    ...state,
-    notes: [...state.notes, payload],
-  }),
-  [FETCH_NOTES]: (state, { payload }) => ({
-    ...state,
-    notes: payload,
-    loading: false,
-  }),
+
 
   [REMOVE_NOTE]: (state, { payload }) => ({
     ...state,
     notes: state.notes.filter((note) => note.id !== payload),
   }),
 
-  [ADD_BOOK]: (state, { payload }) => ({
-    ...state,
-    books: [...state.books, payload],
-  }),
+  // [ADD_BOOK]: (state, { payload }) => ({
+  //   ...state,
+  //   books: [...state.books, payload],
+  // }),
+
+  [ADD_BOOK]: (state, { payload }) =>{
+    const newBooks = state.books;
+    newBooks[payload.id]=payload.book;
+    return {
+      ...state,
+      books: newBooks
+    }
+  },
+  
   [FETCH_BOOKS]: (state, { payload }) => ({
     ...state,
     books: payload,
@@ -52,23 +54,6 @@ const handlers = {
       books: newBooks,
     };
   },
-
-  // (
-  //   if(true){
-
-  //   }
-  //   return {
-  //   ...state,
-  //   books[id]:{},
-  //   // books: state.books.find(book => book.id !== payload.bookId).pages.push(payload.values),
-  //   books: state.books.map((book) => {
-  //     if(book.id === payload.bookId){
-  //       book.pages=payload.pages;
-  //     }
-  //     return book;
-  //   })
-  //   // state.books[payload.bookId]:[...state.books[payload.bookId], payload.page]
-  // }),
 
   [ADD_TEMPLATE]: (state, { payload }) => ({
     ...state,

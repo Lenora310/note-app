@@ -17,22 +17,28 @@ export const Page = ({ bookId, pageNumber }) => {
   const saveInputValue = (inputId) => {};
 
   useEffect(() => {
+    console.log("find book", firebase.books.find((element) => {
+      return element.id === bookId;
+    }))
+
+    // console.log("book[id]", firebase.books[bookId])
+    // console.log("books", typeof firebase.books)
+    // console.log("books keys", Object.keys(firebase.books))
+    // console.log("books[10]", firebase.books[10])
+    // console.log("pages keys", Object.keys(firebase.books[10].pages))
+    // console.log("pages[0]", firebase.books[10].pages[0])
+    // console.log("pages[-MqddPfCLGXOHwgBY3My]", firebase.books[10].pages["-MqddPfCLGXOHwgBY3My"])
+
     template.elements.forEach((el) => {
       const oldInstance = document.getElementById(el.elementId);
       if (oldInstance) {
-        oldInstance.remove(); //.parentNode.removeChild(toRemove);
+        oldInstance.remove(); 
       }
-
       addPageElement(el.parentId, el.elementTag, el.elementId, el.html);
-      // if (el.elementTag === "input") {
-      //   // el.onsubmit = function () {
-      //   //   _gaq.push(["_linkByPost", this]);
-      //   // };
-      //   // document.getElementById(el.elementId).value = "hello";
-      // }
     });
-    // document.getElementById(PARENTID).value = "QWAQWA";
   });
+
+  
 
 
   return (

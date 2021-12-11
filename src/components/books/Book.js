@@ -1,6 +1,5 @@
 import React, {useState, useContext, useEffect } from "react";
 import { Page } from "./Page";
-import Modal from "react-bootstrap/Modal";
 import { FirebaseContext } from "../../context/firebase/firebaseContext";
 import { PageForm } from "../form/PageForm";
 import { Button } from "react-bootstrap";
@@ -17,7 +16,6 @@ export const Book = (props) => {
     }).pages
   );
   const [currentPage, setCurrentPage] = useState(0);
-  const [showModal, setShowModal] = useState(false);
 
   const previousPage = () => {
     if (currentPage !== 0) {
@@ -40,9 +38,7 @@ export const Book = (props) => {
 
     // setCurrentPage(Object.keys(pages).length);
   };
-  const hideModal = () => {
-    setShowModal(false);
-  };
+
   // console.log("pages DO addPage:", pages);
   // console.log("pages PO addPage:", pages);
   // console.log("pages total:", pages);
@@ -89,29 +85,6 @@ export const Book = (props) => {
       <br />
       <br />
       <Button onClick={addPage}>Add new page</Button>
-
-      <Modal show={showModal} onHide={hideModal}>
-        <Modal.Header>
-          <Modal.Title>Create a new page!</Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body>
-          <PageForm bookId={id}></PageForm>
-          {/* <form onSubmit={handleSubmit}>
-              <input value={state.modalInput} onChange={handleModalInputChange}/>
-              <button type="submit">Submit</button>
-          </form> */}
-        </Modal.Body>
-
-        <Modal.Footer>
-          <button variant="secondary" onClick={hideModal}>
-            Close
-          </button>
-          {/* <button variant="primary" onClick={saveNewPage}>
-            Save Changes
-          </button> */}
-        </Modal.Footer>
-      </Modal>
     </div>
   );
 };

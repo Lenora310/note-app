@@ -86,19 +86,6 @@ export const TemplateCreator = () => {
     event.stopPropagation();
     document.getElementById(elementId).remove();
     setElements(elements.filter(el => el.elementId!==elementId && el.parentId!==elementId));
-    // setElements(elements.filter(el => el.elementId!==elementId));
-    // console.log("newElements=",elements)
-    // if (elementId === draftId) {
-    //   // setElements(elementsInit);
-    //   // addElement(elementsInit[0].parentId, elementsInit[0].elementTag,elementsInit[0].elementId, elementsInit[0].html);
-    // }
-    // setElements(elements.filter((el) => el.elementId !== elementId));
-
-    // let newElements=elements.filter(el => el.elementId!==elementId && el.parentId!==elementId);
-
-    // console.log("newElements=",newElements)
-
-    //  console.log("element with id=",elementId, " was deleted");
   };
 
   const getNewId = () => {

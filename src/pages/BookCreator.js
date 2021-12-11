@@ -15,6 +15,7 @@ export const BookCreator = () => {
 
   useEffect(() => {
     fetchTemplates();
+    // eslint-disable-next-line
   }, []);
 
   const chooseTemplate = (id) => {
