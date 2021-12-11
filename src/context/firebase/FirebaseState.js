@@ -11,15 +11,15 @@ import {
   ADD_BOOK_PAGE,
   ADD_TEMPLATE,
   FETCH_TEMPLATES,
+  ADD_PAGE_VALUE,
 } from "../types";
 
 const url = process.env.REACT_APP_DB_URL;
 
 export const FirebaseState = ({ children }) => {
   const initialState = {
-    books: [], //new Map(),
+    books: [],
     templates: [],
-    
     loading: false,
   };
   const [state, dispatch] = useReducer(firebaseReducer, initialState);
@@ -73,56 +73,72 @@ export const FirebaseState = ({ children }) => {
     }
   };
 
-  const addPageValue = (bookId, pageNumber, elementId, value) => {
-    
-  };
+  const addPageValue = async (bookId, pageId, elementId, elementValue) => {
+    const res = await axios.get(
+      `${url}/books/${bookId}/pages/${pageId}/values.json`
+    );
+    const newValues = res.data;
+    newValues[elementId] = elementValue;
 
-  const addBookPage = async (bookId) => {
-
-    const page = {
-      // values:{inputId:"notInputActually"}
-      values:{inputId:"Meme bebe"}
-    };
     try {
-      const pageRes = await axios.post(`${url}/books/${bookId}/pages.json`, page);
-      console.log("addPage", pageRes);
-      // const pagesRes = await axios.get(`${url}/books/${bookId}/pages.json`);
-      // console.log("pagesRes", pagesRes);
-      
+      const res = await axios.put(
+        `${url}/books/${bookId}/pages/${pageId}/values.json`,
+        newValues
+      );
+      console.log("addPageValue", res.data);
       const payload = {
-        pageId: pageRes.data.name,
-        page,
-        bookId
+        bookId,
+        pageId,
+        newValues,
       };
-      console.log("payload", payload);
-      console.log("books do dispatch=", state.books);
-      
+
       dispatch({
-        type: ADD_BOOK_PAGE,
+        type: ADD_PAGE_VALUE,
         payload,
       });
-      console.log("books PO dispatch=", state.books);
     } catch (e) {
       throw new Error(e.message);
     }
   };
 
-  
+  const addBookPage = async (bookId) => {
+    const page = {
+      // values:{inputId:"notInputActually"}
+      values: { inputId: "Meme bebe" },
+    };
+    try {
+      const pageRes = await axios.post(
+        `${url}/books/${bookId}/pages.json`,
+        page
+      );
+      console.log("addPage", pageRes.data);
+
+      const payload = {
+        pageId: pageRes.data.name,
+        page,
+        bookId,
+      };
+
+      dispatch({
+        type: ADD_BOOK_PAGE,
+        payload,
+      });
+    } catch (e) {
+      throw new Error(e.message);
+    }
+  };
 
   const addBook = async (title, template) => {
     const book = {
       title,
       date: new Date().toJSON(),
-      // pages: [{values:[]}],
-      // pages: [],
-      template
+      template,
     };
 
     try {
       const res = await axios.post(`${url}/books.json`, book);
       console.log("addBook", res.data);
       const payload = {
-        // ...book,
         book,
         id: res.data.name,
       };
@@ -130,6 +146,7 @@ export const FirebaseState = ({ children }) => {
         type: ADD_BOOK,
         payload,
       });
+      addBookPage(res.data.name);
     } catch (e) {
       throw new Error(e.message);
     }
@@ -138,16 +155,10 @@ export const FirebaseState = ({ children }) => {
   const fetchBooks = async () => {
     showLoader();
     const res = await axios.get(`${url}/books.json`);
-    console.log(res);
 
     if (res.data) {
-      const payload = Object.keys(res.data).map((key) => {
-        return {
-          ...res.data[key],
-          id: key,
-        };
-      });
-
+      const payload = [];
+      Object.keys(res.data).forEach((id) => (payload[id] = res.data[id]));
       dispatch({
         type: FETCH_BOOKS,
         payload,
@@ -163,7 +174,6 @@ export const FirebaseState = ({ children }) => {
     });
   };
 
-  
   return (
     <FirebaseContext.Provider
       value={{
@@ -175,6 +185,7 @@ export const FirebaseState = ({ children }) => {
         removeBook,
         books: state.books,
         addBookPage,
+        addPageValue,
 
         addTemplate,
         fetchTemplates,

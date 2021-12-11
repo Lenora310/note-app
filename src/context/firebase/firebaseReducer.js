@@ -1,13 +1,13 @@
 import {
   SHOW_LOADER,
-  ADD_NOTE,
-  FETCH_NOTES,
   REMOVE_NOTE,
   ADD_BOOK,
   FETCH_BOOKS,
   ADD_BOOK_PAGE,
+  ADD_PAGE_VALUE,
   ADD_TEMPLATE,
   FETCH_TEMPLATES,
+  REMOVE_BOOK,
 } from "../types";
 
 const handlers = {
@@ -19,9 +19,9 @@ const handlers = {
     notes: state.notes.filter((note) => note.id !== payload),
   }),
 
-  // [ADD_BOOK]: (state, { payload }) => ({
+  // [REMOVE_BOOK]: (state, { payload }) => ({
   //   ...state,
-  //   books: [...state.books, payload],
+  //   books: state.books.filter((book) => book.id !== payload),
   // }),
 
   [ADD_BOOK]: (state, { payload }) =>{
@@ -41,19 +41,26 @@ const handlers = {
 
   [ADD_BOOK_PAGE]: (state, { payload }) => {
     const newBooks = state.books;
-    console.log("newBooks=", newBooks)
-    // newBooks[payload.bookId].pages.push(payload.page);
-    if(!newBooks.find(el => el.id===payload.bookId).pages){
-      newBooks.find(el => el.id===payload.bookId).pages=[];
+    if(!newBooks[payload.bookId].pages){
+      newBooks[payload.bookId].pages=[];
     }
-    newBooks.find(el => el.id===payload.bookId).pages[payload.pageId]=payload.page;
-    // newBooks.find(el => el.id===payload.bookId).pages=[{payload.pageId:payload.page}];
-
+    newBooks[payload.bookId].pages[payload.pageId]=payload.page;
     return {
       ...state,
       books: newBooks,
     };
   },
+
+  [ADD_PAGE_VALUE]: (state, {payload}) =>{
+    const newBooks = state.books;
+    newBooks[payload.bookId].pages[payload.pageId].values=payload.newValues;
+    return {
+      ...state,
+      books: newBooks,
+    };
+  },
+
+
 
   [ADD_TEMPLATE]: (state, { payload }) => ({
     ...state,

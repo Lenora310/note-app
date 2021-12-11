@@ -14,15 +14,12 @@ export const Home = () => {
     // eslint-disable-next-line
   }, []);
   
-
   return (
     // <div onClick={handler}>
     <Fragment>
 
-      <h3>Book form</h3>
-      <BookForm />
-      <hr />
-
+      <h3>Your books</h3>
+  
       {/* {loading ? (
           <Loader />
         ) : (

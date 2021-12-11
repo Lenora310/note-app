@@ -9,7 +9,6 @@ export const BookCreator = () => {
   const { templates, fetchTemplates, addBook } = useContext(FirebaseContext);
   const alert = useContext(AlertContext);
 
-  console.log("Book creator - templates=", templates);
   const [templateId, setTemplateId] = useState("");
   const [bookTitle, setBookTitle] = useState("");
 
@@ -38,6 +37,7 @@ export const BookCreator = () => {
       <div className="list-group" role="tablist">
         {templates.map((template) => (
           <button
+          key={template.id}
             type="button"
             className="list-group-item list-group-item-action"
             role="tab"
