@@ -151,6 +151,12 @@ export const TemplateCreator = () => {
             >
               Add paragraph
             </Button>
+
+            <Button
+              onClick={() => addElement(draftId, "textarea", getNewId(), "")}
+            >
+              Add text area
+            </Button>
           </Col>
 
           <Col className="col-8 template-creator-column draft">

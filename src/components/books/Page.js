@@ -21,7 +21,7 @@ export const Page = ({ bookId, pageId }) => {
         oldInstance.remove();
       }
       addPageElement(el.parentId, el.elementTag, el.elementId, el.html);
-      if (el.elementTag === "input") {
+      if (el.elementTag === "input" || el.elementTag === "textarea" ) {
         document.getElementById(el.elementId).onchange = saveInputValue;
       }
     });
