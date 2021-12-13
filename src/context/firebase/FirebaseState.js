@@ -12,6 +12,7 @@ import {
   ADD_TEMPLATE,
   FETCH_TEMPLATES,
   ADD_PAGE_VALUE,
+  ADD_USER,
 } from "../types";
 
 const url = process.env.REACT_APP_DB_URL;
@@ -20,6 +21,7 @@ export const FirebaseState = ({ children }) => {
   const initialState = {
     books: [],
     templates: [],
+    users: [],
     loading: false,
   };
   const [state, dispatch] = useReducer(firebaseReducer, initialState);
@@ -33,6 +35,28 @@ export const FirebaseState = ({ children }) => {
       payload: id,
     });
   };
+
+  const addUser = async (login, password)=> {
+    const user={
+      login,
+      password
+    }
+    try {
+      const res = await axios.post(`${url}/users.json`, user);
+      console.log("addUser", res.data);
+      const payload = {
+        user,
+        id: res.data.name,
+      };
+      dispatch({
+        type: ADD_USER,
+        payload,
+      });
+    } catch (e) {
+      throw new Error(e.message);
+    }
+
+  }
 
   const fetchTemplates = async () => {
     showLoader();
@@ -179,6 +203,8 @@ export const FirebaseState = ({ children }) => {
       value={{
         showLoader,
         loading: state.loading,
+
+        addUser,
 
         addBook,
         fetchBooks,

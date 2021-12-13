@@ -8,6 +8,7 @@ import {
   ADD_TEMPLATE,
   FETCH_TEMPLATES,
   REMOVE_BOOK,
+  ADD_USER,
 } from "../types";
 
 const handlers = {
@@ -30,6 +31,14 @@ const handlers = {
     return {
       ...state,
       books: newBooks
+    }
+  },
+  [ADD_USER]: (state, { payload }) =>{
+    const newUsers = state.users;
+    newUsers[payload.id]=payload.user;
+    return {
+      ...state,
+      users: newUsers
     }
   },
   

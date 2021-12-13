@@ -13,6 +13,9 @@ export const Navbar = () => (
             <li className="nav-item">
                 <NavLink className="nav-link" to="/template_creator">New template </NavLink> 
             </li>
+            <li className="nav-item">
+                <NavLink className="nav-link" to="/authentication">Authentication</NavLink> 
+            </li>
         </ul>
 
     </nav>  

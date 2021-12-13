@@ -1,4 +1,23 @@
+// @import "bootstrap/functions";
+// @import "bootstrap/variables";
+
+
+
+// /* finally, import Bootstrap */
+// @import "bootstrap";
+
+// $theme-colors: (
+//   "primary": #0074d9,
+//   "danger": #ff4136
+// );
+// $primary: purple;
+// $danger: red;
+
 @import "~bootstrap/scss/bootstrap";
+
+$theme-colors: (
+  primary: $purple
+);
 
 body {
   margin: 0;
