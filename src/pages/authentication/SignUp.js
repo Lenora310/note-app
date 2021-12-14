@@ -1,21 +1,25 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AlertContext } from "../../context/alert/alertContext";
 import { FirebaseContext } from "../../context/firebase/firebaseContext";
-export const SingUp = () => {
+import {
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../../firebase-config";
+import { Button } from "react-bootstrap";
+
+
+export const SignUp = () => {
   const alert = useContext(AlertContext);
-  const firebase = useContext(FirebaseContext);
+  // const firebase = useContext(FirebaseContext);
 
   const [loginValue, setLoginValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const [passwordCopyValue, setPasswordCopyValue] = useState("");
 
-  const submitHandler = (event) => {
+  const signUp = (event) => {
     event.preventDefault();
-    if (
-      !loginValue.trim() ||
-      !passwordValue.trim() ||
-      !passwordCopyValue.trim()
-    ) {
+
+    if (!loginValue.trim() || !passwordValue || !passwordCopyValue) {
       alert.show("Fill all fields please");
       return;
     }
@@ -24,8 +28,7 @@ export const SingUp = () => {
       return;
     }
 
-    firebase
-      .addUser(loginValue, passwordValue)
+    createUserWithEmailAndPassword(auth, loginValue, passwordValue)
       .then(() => {
         alert.show("User was created", "success");
       })
@@ -35,17 +38,18 @@ export const SingUp = () => {
   };
 
   return (
-    <form className="sign-up-form" onSubmit={submitHandler}>
+    <form className="sign-up-form" onSubmit={signUp}>
       <h1 className="h3 mb-3 fw-normal">Sign up</h1>
 
       <div className="form-floating">
         <input
+          type="email"
           className="form-control"
           id="floatingInput"
           placeholder="login"
           onChange={(event) => setLoginValue(event.target.value)}
         />
-        <label htmlFor="floatingInput">Login</label>
+        <label htmlFor="floatingInput">Email</label>
       </div>
       <div className="form-floating">
         <input
@@ -73,9 +77,9 @@ export const SingUp = () => {
           <input type="checkbox" value="remember-me" /> Remember me
         </label>
       </div>
-      <button className="w-100 btn btn-lg btn-primary" type="submit">
+      <Button className="w-100 btn btn-lg btn-primary" type="submit">
         Sign up
-      </button>
+      </Button>
     </form>
   );
 };
