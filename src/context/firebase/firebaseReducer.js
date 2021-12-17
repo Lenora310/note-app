@@ -8,11 +8,13 @@ import {
   ADD_TEMPLATE,
   FETCH_TEMPLATES,
   REMOVE_BOOK,
-  ADD_USER,
+  SET_USER,
 } from "../types";
 
 const handlers = {
   [SHOW_LOADER]: (state) => ({ ...state, loading: true }),
+  
+  [SET_USER]: (state, {payload}) => ({ ...state, user: payload.user }),
 
 
   [REMOVE_NOTE]: (state, { payload }) => ({
@@ -33,15 +35,6 @@ const handlers = {
       books: newBooks
     }
   },
-  [ADD_USER]: (state, { payload }) =>{
-    const newUsers = state.users;
-    newUsers[payload.id]=payload.user;
-    return {
-      ...state,
-      users: newUsers
-    }
-  },
-  
   [FETCH_BOOKS]: (state, { payload }) => ({
     ...state,
     books: payload,

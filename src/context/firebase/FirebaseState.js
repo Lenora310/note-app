@@ -12,7 +12,7 @@ import {
   ADD_TEMPLATE,
   FETCH_TEMPLATES,
   ADD_PAGE_VALUE,
-  ADD_USER,
+  SET_USER,
 } from "../types";
 
 const url = process.env.REACT_APP_DB_URL;
@@ -21,12 +21,13 @@ export const FirebaseState = ({ children }) => {
   const initialState = {
     books: [],
     templates: [],
-    users: [],
+    curentUser: null,
     loading: false,
   };
   const [state, dispatch] = useReducer(firebaseReducer, initialState);
 
   const showLoader = () => dispatch({ type: SHOW_LOADER });
+  const setUser = (user) => dispatch({ type: SET_USER, payload: { user } });
 
   const removeNote = async (id) => {
     await axios.delete(`${url}/notes/${id}.json`);
@@ -35,29 +36,6 @@ export const FirebaseState = ({ children }) => {
       payload: id,
     });
   };
-
-  const addUser = async (login, password)=> {
-    const user={
-      login,
-      password
-    }
-    try {
-      const res = await axios.post(`${url}/users.json`, user);
-      console.log("addUser", res.data);
-      const payload = {
-        user,
-        id: res.data.name,
-      };
-      dispatch({
-        type: ADD_USER,
-        payload,
-      });
-    } catch (e) {
-      throw new Error(e.message);
-    }
-
-  }
-
   const fetchTemplates = async () => {
     showLoader();
     const res = await axios.get(`${url}/templates.json`);
@@ -204,7 +182,8 @@ export const FirebaseState = ({ children }) => {
         showLoader,
         loading: state.loading,
 
-        addUser,
+        setUser,
+        user: state.user,
 
         addBook,
         fetchBooks,
