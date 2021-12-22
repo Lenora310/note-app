@@ -9,12 +9,22 @@ import {
   FETCH_TEMPLATES,
   REMOVE_BOOK,
   SET_USER,
+  ADD_USER,
 } from "../types";
 
 const handlers = {
   [SHOW_LOADER]: (state) => ({ ...state, loading: true }),
   
   [SET_USER]: (state, {payload}) => ({ ...state, user: payload.user }),
+
+  [ADD_USER]: (state, { payload }) =>{
+    const newUsers = state.users;
+    newUsers[payload.id]=payload.uid;
+    return {
+      ...state,
+      users: newUsers
+    }
+  },
 
 
   [REMOVE_NOTE]: (state, { payload }) => ({

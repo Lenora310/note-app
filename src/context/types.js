@@ -4,8 +4,8 @@ export const HIDE_ALERT = 'HIDE_ALERT'
 export const SHOW_LOADER = 'SHOW_LOADER'
 
 
-
 export const SET_USER = 'SET_USER'
+export const ADD_USER = 'ADD_USER'
 
 
 export const ADD_NOTE = 'ADD_NOTE'

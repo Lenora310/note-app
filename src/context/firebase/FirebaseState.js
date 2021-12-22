@@ -13,12 +13,14 @@ import {
   FETCH_TEMPLATES,
   ADD_PAGE_VALUE,
   SET_USER,
+  ADD_USER
 } from "../types";
 
 const url = process.env.REACT_APP_DB_URL;
 
 export const FirebaseState = ({ children }) => {
   const initialState = {
+    users: [],
     books: [],
     templates: [],
     curentUser: null,
@@ -28,6 +30,28 @@ export const FirebaseState = ({ children }) => {
 
   const showLoader = () => dispatch({ type: SHOW_LOADER });
   const setUser = (user) => dispatch({ type: SET_USER, payload: { user } });
+
+  const addUser = async (newUser)=> {
+    const newUserUid ={
+      uid: newUser.uid
+    }
+    try {
+      const res = await axios.post(`${url}/users.json`, newUserUid);
+      console.log("addUser", res.data);
+      const payload = {
+        uid: newUserUid.uid,
+        id: res.data.name,
+      };
+      dispatch({
+        type: ADD_USER,
+        payload,
+      });
+    } catch (e) {
+      throw new Error(e.message);
+    }
+
+  }
+
 
   const removeNote = async (id) => {
     await axios.delete(`${url}/notes/${id}.json`);
@@ -105,8 +129,8 @@ export const FirebaseState = ({ children }) => {
 
   const addBookPage = async (bookId) => {
     const page = {
-      // values:{inputId:"notInputActually"}
-      values: { inputId: "Meme bebe" },
+      values:{elementId:"value"}
+      // values: { inputId: "Meme bebe" },
     };
     try {
       const pageRes = await axios.post(
@@ -183,6 +207,7 @@ export const FirebaseState = ({ children }) => {
         loading: state.loading,
 
         setUser,
+        addUser,
         user: state.user,
 
         addBook,
