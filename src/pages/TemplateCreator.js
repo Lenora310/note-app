@@ -105,7 +105,7 @@ export const TemplateCreator = () => {
   };
   const saveTemplate = () => {
     firebase
-      .addTemplate(title, elements)
+      .addTemplate(firebase.user.uid, title, elements)
       .then(() => {
         alert.show("Template was created", "success");
       })

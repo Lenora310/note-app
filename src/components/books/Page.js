@@ -11,7 +11,7 @@ export const Page = ({ bookId, pageId }) => {
   const parentId = PARENTID;
 
   const saveInputValue = (event) => {
-    firebase.addPageValue(bookId, pageId, event.target.id, event.target.value);
+    firebase.addPageValue(firebase.user.uid, bookId, pageId, event.target.id, event.target.value);
   };
 
   useEffect(() => {

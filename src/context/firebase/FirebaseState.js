@@ -13,14 +13,15 @@ import {
   FETCH_TEMPLATES,
   ADD_PAGE_VALUE,
   SET_USER,
-  ADD_USER
+  ADD_USER,
+  FETCH_USERS
 } from "../types";
 
 const url = process.env.REACT_APP_DB_URL;
 
 export const FirebaseState = ({ children }) => {
   const initialState = {
-    users: [],
+    users: {},
     books: [],
     templates: [],
     curentUser: null,
@@ -31,26 +32,26 @@ export const FirebaseState = ({ children }) => {
   const showLoader = () => dispatch({ type: SHOW_LOADER });
   const setUser = (user) => dispatch({ type: SET_USER, payload: { user } });
 
-  const addUser = async (newUser)=> {
-    const newUserUid ={
-      uid: newUser.uid
-    }
-    try {
-      const res = await axios.post(`${url}/users.json`, newUserUid);
-      console.log("addUser", res.data);
-      const payload = {
-        uid: newUserUid.uid,
-        id: res.data.name,
-      };
-      dispatch({
-        type: ADD_USER,
-        payload,
-      });
-    } catch (e) {
-      throw new Error(e.message);
-    }
+  // const addUser = async (newUser)=> {
+  //   const newUserUid ={
+  //     uid: newUser.uid
+  //   }
+  //   try {
+  //     const res = await axios.post(`${url}/users.json`, newUserUid);
+  //     console.log("addUser", res.data);
+  //     const payload = {
+  //       uid: newUserUid.uid,
+  //       id: res.data.name,
+  //     };
+  //     dispatch({
+  //       type: ADD_USER,
+  //       payload,
+  //     });
+  //   } catch (e) {
+  //     throw new Error(e.message);
+  //   }
 
-  }
+  // }
 
 
   const removeNote = async (id) => {
@@ -60,16 +61,25 @@ export const FirebaseState = ({ children }) => {
       payload: id,
     });
   };
+
+
   const fetchTemplates = async () => {
     showLoader();
-    const res = await axios.get(`${url}/templates.json`);
+    const res = await axios.get(`${url}/users/${state.curentUser.uid}/templates.json`);
 
-    const payload = Object.keys(res.data).map((key) => {
-      return {
-        ...res.data[key],
-        id: key,
-      };
-    });
+    const newTemplates =[];
+    Object.keys(res.data).forEach((id) => (newTemplates[id] = res.data[id]));
+      const payload ={
+        userUid:state.curentUser.uid,
+        templates: newTemplates,
+      }
+
+    // const payload = Object.keys(res.data).map((key) => {
+    //   return {
+    //     ...res.data[key],
+    //     id: key,
+    //   };
+    // });
 
     dispatch({
       type: FETCH_TEMPLATES,
@@ -77,17 +87,18 @@ export const FirebaseState = ({ children }) => {
     });
   };
 
-  const addTemplate = async (templateTitle, elements) => {
+  const addTemplate = async (userUid, templateTitle, elements) => {
     const template = {
       title: templateTitle,
       elements,
     };
     try {
-      const res = await axios.post(`${url}/templates.json`, template);
+      const res = await axios.post(`${url}/users/${userUid}/templates.json`, template);
       console.log("addTemplate", res.data);
       const payload = {
-        ...template,
-        id: res.data.name,
+        template,
+        templateId: res.data.name,
+        userUid
       };
 
       dispatch({
@@ -99,20 +110,21 @@ export const FirebaseState = ({ children }) => {
     }
   };
 
-  const addPageValue = async (bookId, pageId, elementId, elementValue) => {
+  const addPageValue = async (userUid, bookId, pageId, elementId, elementValue) => {
     const res = await axios.get(
-      `${url}/books/${bookId}/pages/${pageId}/values.json`
+      `${url}/users/${userUid}/books/${bookId}/pages/${pageId}/values.json`
     );
     const newValues = res.data;
     newValues[elementId] = elementValue;
 
     try {
       const res = await axios.put(
-        `${url}/books/${bookId}/pages/${pageId}/values.json`,
+        `${url}/users/${userUid}/books/${bookId}/pages/${pageId}/values.json`,
         newValues
       );
       console.log("addPageValue", res.data);
       const payload = {
+        userUid,
         bookId,
         pageId,
         newValues,
@@ -127,19 +139,19 @@ export const FirebaseState = ({ children }) => {
     }
   };
 
-  const addBookPage = async (bookId) => {
+  const addBookPage = async (userUid,bookId) => {
     const page = {
       values:{elementId:"value"}
-      // values: { inputId: "Meme bebe" },
     };
     try {
       const pageRes = await axios.post(
-        `${url}/books/${bookId}/pages.json`,
+        `${url}/users/${userUid}/books/${bookId}/pages.json`,
         page
       );
       console.log("addPage", pageRes.data);
 
       const payload = {
+        userUid,
         pageId: pageRes.data.name,
         page,
         bookId,
@@ -154,7 +166,7 @@ export const FirebaseState = ({ children }) => {
     }
   };
 
-  const addBook = async (title, template) => {
+  const addBook = async (userUid, title, template) => {
     const book = {
       title,
       date: new Date().toJSON(),
@@ -162,17 +174,18 @@ export const FirebaseState = ({ children }) => {
     };
 
     try {
-      const res = await axios.post(`${url}/books.json`, book);
+      const res = await axios.post(`${url}/users/${userUid}/books.json`, book);
       console.log("addBook", res.data);
       const payload = {
+        userUid,
         book,
-        id: res.data.name,
+        bookId: res.data.name,
       };
       dispatch({
         type: ADD_BOOK,
         payload,
       });
-      addBookPage(res.data.name);
+      addBookPage(userUid, res.data.name);
     } catch (e) {
       throw new Error(e.message);
     }
@@ -180,16 +193,48 @@ export const FirebaseState = ({ children }) => {
 
   const fetchBooks = async () => {
     showLoader();
-    const res = await axios.get(`${url}/books.json`);
+    const res = await axios.get(`${url}/users/${state.curentUser.uid}/books.json`);
 
     if (res.data) {
-      const payload = [];
-      Object.keys(res.data).forEach((id) => (payload[id] = res.data[id]));
+      const newBooks = [];
+      Object.keys(res.data).forEach((id) => (newBooks[id] = res.data[id]));
+      const payload ={
+        userUid:state.curentUser.uid,
+        books: newBooks,
+      }
+      console.log("FB_STATE fetchBooks payload", payload);
       dispatch({
         type: FETCH_BOOKS,
         payload,
       });
     }
+    console.log("fb_state in FETCH_BOOKS state POSLE", state);
+  };
+
+
+  const fetchUsers = async () => {
+    console.log("FB_STATE in fetchUsers state DO", state);
+    const res = await axios.get(`${url}/users.json`);
+    console.log("FB_STATE fetchUsers res", res);
+
+    if (res.data) {
+      const newUsers = [];
+      Object.keys(res.data).forEach((id) => (newUsers[id] = res.data[id]));
+      const payload ={
+        users: newUsers,
+      }
+      console.log("FB_STATE fetchUsers payload", payload);
+      dispatch({
+        type: FETCH_USERS,
+        payload,
+      });
+
+      
+    }
+    console.log("FB_STATE in fetchUsers state POSLE", state);
+
+    console.log("FB_STATE fetchUsers users", state.users);
+
   };
 
   const removeBook = async (id) => {
@@ -207,8 +252,10 @@ export const FirebaseState = ({ children }) => {
         loading: state.loading,
 
         setUser,
-        addUser,
-        user: state.user,
+        // addUser,
+        user: state.curentUser,
+        users: state.users,
+        fetchUsers,
 
         addBook,
         fetchBooks,

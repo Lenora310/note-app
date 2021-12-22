@@ -5,7 +5,7 @@ import { Button } from "react-bootstrap";
 
 export const Book = (props) => {
   const firebase = useContext(FirebaseContext);
-  const { addBookPage } = useContext(FirebaseContext);
+  const { addBookPage, user } = useContext(FirebaseContext);
 
   const [id] = useState(props.match.params.id);
   const [title] = useState(firebase.books[id].title);
@@ -25,7 +25,7 @@ export const Book = (props) => {
     }
   };
   const addPage = () => {
-    addBookPage(id).then(() => {
+    addBookPage(user.uid, id).then(() => {
       setPages(Object.keys(firebase.books[id].pages));
     });
   };

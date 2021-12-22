@@ -1,22 +1,28 @@
-import React from "react";
+import React, { useContext, useEffect} from "react";
 import { Link } from "react-router-dom";
+import { FirebaseContext } from "../../context/firebase/firebaseContext";
 
-export const BookList = ({ books }) => {
+export const BookList = () => {
+  const {users, user, fetchBooks} = useContext(FirebaseContext);
+
+  useEffect(() => {
+    console.log("BOOKLIST user=", user);
+    fetchBooks();
+    console.log("BOOKLIST users=",users )
+    console.log("BOOKLIST users[userUid]=",users[user.uid] )
+    // eslint-disable-next-line
+  }, []);
+  
   return (
-    <div>
+    <div> 
+      console.log("BOOKLIST users=",users )
       <ul>
-        {Object.keys(books).map((id) => {
+        {Object.keys(users[user.uid].books).map((id) => {
           return (
             <Link to={{ pathname: `/books/${id}` }} key={id}>
               <li className="list-group-item book" >
                 <div>
-                  <strong>{books[id].title}</strong>
-                  &nbsp;&nbsp;
-                  {/* {console.log(book.title, " ",book.id)}
-                <small>{book.id}</small>
-                &nbsp;&nbsp; */}
-                  {/* {book.pages.map(page => (<small>{page.title} &nbsp;</small>))} */}
-                  {/* <small>{book.pages.title}</small> */}
+                  <strong>{users[user.uid].books[id].title}</strong>
                 </div>
               </li>
             </Link>

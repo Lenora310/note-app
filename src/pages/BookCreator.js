@@ -6,7 +6,7 @@ import { Form } from "../components/form/Form";
 import { AlertContext } from "../context/alert/alertContext";
 
 export const BookCreator = () => {
-  const { templates, fetchTemplates, addBook } = useContext(FirebaseContext);
+  const { templates, fetchTemplates, addBook, user } = useContext(FirebaseContext);
   const alert = useContext(AlertContext);
 
   const [templateId, setTemplateId] = useState("");
@@ -21,7 +21,7 @@ export const BookCreator = () => {
     setTemplateId(id);
   };
   const createBook = () => {
-    addBook(bookTitle, templates.find(el => el.id===templateId))
+    addBook(user.uid, bookTitle, templates.find(el => el.id===templateId))
       .then(() => {
         alert.show("Book was created", "success");
       })

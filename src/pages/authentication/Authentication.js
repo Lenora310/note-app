@@ -19,9 +19,15 @@ export const Authentication = () => {
     // const unsubscribe = auth.
     console.log("AUTHENT useEffect 1")
     onAuthStateChanged(auth, (currentUser) => {
-      firebase.setUser(currentUser);
+      firebase.setUser(currentUser)
+    //  
     });
-    console.log("AUTHENT useEffect 2")
+    firebase.fetchUsers().then(()=>{
+         console.log("AUTHENT users", firebase.users)
+      })
+    //   firebase.fetchBooks().then(()=>{
+    //     // console.log("AUTHENT ", firebase.users)
+    //  })
   }, []);
 
   const logOut = () => {

@@ -7,12 +7,15 @@ import { FirebaseContext } from "../context/firebase/firebaseContext";
 import { Link } from "react-router-dom";
 
 export const Home = () => {
-  const { loading, books, fetchBooks } = useContext(FirebaseContext);
+  const { loading, books, fetchBooks, user, users} = useContext(FirebaseContext);
 
-  useEffect(() => {
-    fetchBooks();
-    // eslint-disable-next-line
-  }, []);
+  // useEffect(() => {
+  //   console.log("HOME user=", user);
+  //   fetchBooks();
+  //   console.log("HOME users=",users )
+  //   console.log("HOME users[userUid]=",users[user.uid] )
+  //   // eslint-disable-next-line
+  // }, []);
   
   return (
     // <div onClick={handler}>
@@ -20,15 +23,8 @@ export const Home = () => {
 
       <h3>Your books</h3>
   
-      {/* {loading ? (
-          <Loader />
-        ) : (
-          <Notes notes={notes} onRemove={removeNote}></Notes>
-        )}
-        
-        <hr /> */}
+      {loading ? <Loader /> : <BookList/>}
 
-      {loading ? <Loader /> : <BookList books={books} />}
       <Link to={{ pathname: `/book_creator` }}>
         <Button>Create new book</Button>
       </Link>
