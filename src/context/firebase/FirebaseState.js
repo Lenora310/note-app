@@ -6,13 +6,11 @@ import { auth } from "../../firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
 import {
   SHOW_LOADER,
-  ADD_NOTE,
-  FETCH_NOTES,
   REMOVE_NOTE,
   ADD_BOOK,
   FETCH_BOOKS,
   REMOVE_BOOK,
-  ADD_PAGE,
+  ADD_BOOK_PAGE,
   ADD_TEMPLATE,
   FETCH_TEMPLATES,
   ADD_PAGE_VALUE,
@@ -173,6 +171,7 @@ export const FirebaseState = ({ children }) => {
         template,
         templateId: res.data.name,
       };
+
       dispatch({
         type: ADD_TEMPLATE,
         payload,
@@ -180,13 +179,6 @@ export const FirebaseState = ({ children }) => {
     } catch (e) {
       throw new Error(e.message);
     }
-  };
-  const removeNote = async (id) => {
-    await axios.delete(`${url}/notes/${id}.json`);
-    dispatch({
-      type: REMOVE_NOTE,
-      payload: id,
-    });
   };
 
   const addBookPage = async (bookId) => {
@@ -205,8 +197,9 @@ export const FirebaseState = ({ children }) => {
         page,
         bookId,
       };
+
       dispatch({
-        type: ADD_TEMPLATE,
+        type: ADD_BOOK_PAGE,
         payload,
       });
     } catch (e) {
@@ -221,8 +214,6 @@ export const FirebaseState = ({ children }) => {
     const newValues = res.data;
     newValues[elementId] = elementValue;
 
-    // console.log("ADD BOOK with book:")
-    // console.log(book)
     try {
       const res = await axios.put(
         `${url}/users/${state.currentUser.uid}/books/${bookId}/pages/${pageId}/values.json`,
@@ -258,7 +249,8 @@ export const FirebaseState = ({ children }) => {
         fetchBooks,
         removeBook,
         books: state.books,
-        addPage,
+        addBookPage,
+        addPageValue,
 
         addTemplate,
         fetchTemplates,
