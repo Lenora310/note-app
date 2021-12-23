@@ -1,54 +1,38 @@
 import React, { Fragment, useEffect, useContext } from "react";
+import { Button } from "react-bootstrap";
 import { BookList } from "../components/books/BookList";
-import { BookForm } from "../components/form/BookForm";
-import { NoteForm } from "../components/form/NoteForm";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase-config";
 import { Loader } from "../components/Loader";
-import { Notes } from "../components/Notes";
 import { FirebaseContext } from "../context/firebase/firebaseContext";
+import { Link } from "react-router-dom";
 
 export const Home = () => {
-  // const { loading, notes, fetchNotes, removeNote, books, fetchBooks } =
-  //   useContext(FirebaseContext);
-  const { loading, books, fetchBooks } =
-    useContext(FirebaseContext);
+  const { loading, fetchBooks, setUser, user } = useContext(FirebaseContext);
 
   useEffect(() => {
-    // fetchNotes();
-    fetchBooks();
-    //eslint-disable-next-line
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    // eslint-disable-next-line
   }, []);
 
-  const handler = () => {
-    console.log("Hello, I am note!");
-  };
+  useEffect(() => {
+    fetchBooks();
+    // eslint-disable-next-line
+  }, [user]);
+
   return (
-    <div onClick={handler}>
-      <Fragment>
-        {/* <h3>Note form</h3>
-        <NoteForm></NoteForm> */}
-        <h3>Book form</h3>
-        <BookForm/>
-        <hr />
+    <Fragment>
+      <h3>Your books</h3>
 
-        {/* {loading ? (
-          <Loader />
-        ) : (
-          <Notes notes={notes} onRemove={removeNote}></Notes>
-        )}
-        
-        <hr /> */}
+      {loading ? <Loader /> : <BookList />}
 
-
-        {loading ? (
-          <Loader />
-        ) : (
-          <BookList books={books} />
-        )}
-
-        
-
-        
-      </Fragment>
-    </div>
+      <Link to={{ pathname: `/book_creator` }}>
+        <Button>Create new book</Button>
+      </Link>
+    </Fragment>
+    // </div>
   );
 };

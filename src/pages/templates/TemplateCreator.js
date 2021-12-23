@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { Button, Container, Row, Col } from "react-bootstrap";
-import { AlertContext } from "../context/alert/alertContext";
-import { FirebaseContext } from "../context/firebase/firebaseContext";
-import { TemplateTitleForm } from "../components/form/TemplateTitleForm";
-// import Collapse from 'react-bootstrap/Collapse'
-// import { Collapse } from bootstrap
+import { AlertContext } from "../../context/alert/alertContext";
+import { FirebaseContext } from "../../context/firebase/firebaseContext";
+import { Form } from "../../components/form/Form";
+import { addPageElement } from "../../utilities/addPageElement";
+import { PARENTID } from "../../context/types";
+
 
 export const TemplateCreator = () => {
   const draftId = 2345; //todo change the constant
@@ -13,19 +14,24 @@ export const TemplateCreator = () => {
   const alert = useContext(AlertContext);
 
   const [title, setTitle] = useState("");
-  const [elements, setElements] = useState([
-    { parentId: 0, elementTag: "div", elementId: draftId, html: "div element" },
-  ]);
+  const elementsInit = 
+    { parentId: PARENTID, elementTag: "div", elementId: draftId, html: "" };
+  const [elements, setElements] = useState([elementsInit]);
+
   const [id, setId] = useState(100);
   const [selected, setSelected] = useState(draftId);
   const [hovered, setHovered] = useState(draftId);
-  console.log("rendering...");
-  // console.log("rendering... elements=", elements);
+
 
   const [showH3input, setshowH3input] = useState(false);
   const [showH1input, setshowH1input] = useState(false);
 
   const prevState = useRef({ selected, hovered });
+  useEffect(() => {
+    if(elements.length===0){
+      addElement(elementsInit.parentId, elementsInit.elementTag,elementsInit.elementId, elementsInit.html);
+    }
+  }, [elements])
 
   useEffect(() => {
     const prevSelEl = document.getElementById(prevState.current.selected);
@@ -35,8 +41,10 @@ export const TemplateCreator = () => {
     const selEl = document.getElementById(selected);
     const selLayer = document.getElementById(selected + "-layer");
 
-    prevSelEl.style.removeProperty("background-color");
-    prevSelLayer.style.removeProperty("color");
+    if (prevSelEl && prevSelLayer) {
+      prevSelEl.style.removeProperty("background-color");
+      prevSelLayer.style.removeProperty("color");
+    }
 
     selEl.style.backgroundColor = "rgba(0,255,0,0.2)";
     selLayer.style.color = "green";
@@ -52,11 +60,10 @@ export const TemplateCreator = () => {
     const hovEl = document.getElementById(hovered);
     const hovLayer = document.getElementById(hovered + "-layer");
 
-    prevHovEl.removeAttribute("style.border");
-    prevHovLayer.removeAttribute("style.border");
-
-    prevHovEl.style.removeProperty("border");
-    prevHovLayer.style.removeProperty("border");
+    if (prevHovEl && prevHovLayer) {
+      prevHovEl.style.removeProperty("border");
+      prevHovLayer.style.removeProperty("border");
+    }
 
     hovEl.style.border = "dashed rgba(0,0,255,0.5)";
     hovLayer.style.border = "dashed rgba(0,0,255,0.5)";
@@ -64,31 +71,16 @@ export const TemplateCreator = () => {
     prevState.current.hovered = hovered;
   }, [hovered]);
 
-  // useEffect(() => {
-  //   // const prevHovEl = document.getElementById(prevState.current.hovered);
-  //   // const prevHovLayer = document.getElementById(
-  //   //   prevState.current.hovered + "-layer"
-  //   // );
-  //   // const hovEl = document.getElementById(hovered);
-  //   // const hovLayer = document.getElementById(hovered + "-layer");
-  //   // prevHovEl.removeAttribute("style.border");
-  //   // prevHovLayer.removeAttribute("style.border");
-  //   // prevHovEl.style.removeProperty("border");
-  //   // prevHovLayer.style.removeProperty("border");
-  //   // hovEl.style.border = "dashed rgba(0,0,255,0.5)";
-  //   // hovLayer.style.border = "dashed rgba(0,0,255,0.5)";
-  //   // prevState.current.hovered = hovered;
-  // }, [elements]);
-
-  function addElement(parentId, elementTag, elementId, html) {
-    let parentElement = document.getElementById(parentId);
-    let elementToAdd = document.createElement(elementTag);
-    elementToAdd.setAttribute("id", elementId);
-    elementToAdd.innerHTML = html;
-    parentElement.appendChild(elementToAdd);
-
+  const addElement = (parentId, elementTag, elementId, html) => {
+    addPageElement(parentId, elementTag, elementId, html);
     setElements([...elements, { parentId, elementTag, elementId, html }]);
-  }
+  };
+
+  const deleteElement = (event, elementId) => {
+    event.stopPropagation();
+    document.getElementById(elementId).remove();
+    setElements(elements.filter(el => el.elementId!==elementId && el.parentId!==elementId));
+  };
 
   const getNewId = () => {
     setId(id + 1);
@@ -119,10 +111,7 @@ export const TemplateCreator = () => {
   return (
     <div>
       <h3>{title}</h3>
-      <TemplateTitleForm
-        saveValue={setTitle}
-        placeholder="Write template title"
-      />
+      <Form saveValue={setTitle} placeholder="Write template title" />
       <Button onClick={() => saveTemplate()}>Save template</Button>
 
       <Container fluid>
@@ -130,7 +119,7 @@ export const TemplateCreator = () => {
           <Col className="template-creator-column add-tools">
             <Button onClick={() => setshowH1input(!showH1input)}>Add h1</Button>
             {showH1input ? (
-              <TemplateTitleForm
+              <Form
                 id="addH1Form"
                 saveValue={addH1Handler}
                 placeholder="Write title"
@@ -144,7 +133,7 @@ export const TemplateCreator = () => {
             </Button>
             <Button onClick={() => setshowH3input(!showH3input)}>Add h3</Button>
             {showH3input ? (
-              <TemplateTitleForm
+              <Form
                 id="addH3Form"
                 saveValue={addH3Handler}
                 placeholder="Write h3 title"
@@ -156,16 +145,24 @@ export const TemplateCreator = () => {
             >
               Add paragraph
             </Button>
+
+            <Button
+              onClick={() => addElement(draftId, "textarea", getNewId(), "")}
+            >
+              Add text area
+            </Button>
           </Col>
 
           <Col className="col-8 template-creator-column draft">
             Draft
-            <div id={draftId}></div>
+            <div id={PARENTID}>
+              <div id={draftId}></div>
+            </div>
           </Col>
 
           <Col className="template-creator-column layers">
             <div className="card">
-              <div class="card-header">
+              <div className="card-header">
                 <strong> Layers </strong>
               </div>
 
@@ -175,14 +172,28 @@ export const TemplateCreator = () => {
                     className="list-group-item"
                     id={el.elementId + "-layer"}
                     key={el.elementId}
-                    onClick={() => setSelected(el.elementId)}
-                    onMouseEnter={() => setHovered(el.elementId)}
+                    onClick={() => {
+                      console.log("li with id=", el.elementId, "clicked");
+                      setSelected(el.elementId);
+                    }}
+                    onMouseEnter={() => {
+                      console.log("li hover was changed to ", el.elementId);
+                      setHovered(el.elementId);
+                    }}
                   >
-                    <p>
-                      <strong>
-                        {el.elementId} &nbsp; {el.html}{" "}
-                      </strong>
-                    </p>
+                    {/* <p> */}
+                    <strong>
+                      {el.elementId} &nbsp; {el.html}{" "}
+                    </strong>
+                    {/* </p> */}
+                    <button
+                      type="button"
+                      className="btn-close"
+                      aria-label="Close"
+                      onClick={(event) => {
+                        deleteElement(event, el.elementId);
+                      }}
+                    ></button>
                   </li>
                 ))}
               </ul>
