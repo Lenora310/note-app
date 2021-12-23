@@ -10,7 +10,7 @@ import { Button } from "react-bootstrap";
 
 export const SignUp = () => {
   const alert = useContext(AlertContext);
-  // const firebase = useContext(FirebaseContext);
+  const firebase = useContext(FirebaseContext);
 
   const [loginValue, setLoginValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
@@ -30,6 +30,7 @@ export const SignUp = () => {
 
     createUserWithEmailAndPassword(auth, loginValue, passwordValue)
       .then(() => {
+        firebase.addUser(auth.currentUser)
         alert.show("User was created", "success");
       })
       .catch(() => {

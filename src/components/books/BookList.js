@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useContext, useEffect} from "react";
 import { Link } from "react-router-dom";
+import { FirebaseContext } from "../../context/firebase/firebaseContext";
 
-export const BookList = ({ books }) => {
+export const BookList = () => {
+  const {books} = useContext(FirebaseContext);
+
+  
   return (
-    <div>
+    <div> 
       <ul>
         {Object.keys(books).map((id) => {
           return (
@@ -11,12 +15,6 @@ export const BookList = ({ books }) => {
               <li className="list-group-item book" >
                 <div>
                   <strong>{books[id].title}</strong>
-                  &nbsp;&nbsp;
-                  {/* {console.log(book.title, " ",book.id)}
-                <small>{book.id}</small>
-                &nbsp;&nbsp; */}
-                  {/* {book.pages.map(page => (<small>{page.title} &nbsp;</small>))} */}
-                  {/* <small>{book.pages.title}</small> */}
                 </div>
               </li>
             </Link>

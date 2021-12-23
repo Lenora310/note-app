@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { Button, Container, Row, Col } from "react-bootstrap";
-import { AlertContext } from "../context/alert/alertContext";
-import { FirebaseContext } from "../context/firebase/firebaseContext";
-import { Form } from "../components/form/Form";
-import { addPageElement } from "../utilities/addPageElement";
-import { PARENTID } from "../context/types";
-// import Collapse from 'react-bootstrap/Collapse'
-// import { Collapse } from bootstrap
+import { AlertContext } from "../../context/alert/alertContext";
+import { FirebaseContext } from "../../context/firebase/firebaseContext";
+import { Form } from "../../components/form/Form";
+import { addPageElement } from "../../utilities/addPageElement";
+import { PARENTID } from "../../context/types";
+
 
 export const TemplateCreator = () => {
   const draftId = 2345; //todo change the constant
@@ -19,15 +18,10 @@ export const TemplateCreator = () => {
     { parentId: PARENTID, elementTag: "div", elementId: draftId, html: "" };
   const [elements, setElements] = useState([elementsInit]);
 
-  // useEffect(() => {
-  //   console.log("elements=", elements);
-  // });
-
   const [id, setId] = useState(100);
   const [selected, setSelected] = useState(draftId);
   const [hovered, setHovered] = useState(draftId);
-  console.log("rendering...");
-  // console.log("rendering... elements=", elements);
+
 
   const [showH3input, setshowH3input] = useState(false);
   const [showH1input, setshowH1input] = useState(false);
@@ -105,7 +99,7 @@ export const TemplateCreator = () => {
   };
   const saveTemplate = () => {
     firebase
-      .addTemplate(title, elements)
+      .addTemplate(firebase.user.uid, title, elements)
       .then(() => {
         alert.show("Template was created", "success");
       })

@@ -1,14 +1,8 @@
-import React, { useContext, useState, useEffect } from "react";
-import { FirebaseContext } from "../../context/firebase/firebaseContext";
-import { PARENTID } from "../../context/types";
-import { addPageElement } from "../../utilities/addPageElement";
+import React from 'react';
 
 export const Page = ({ bookId, pageId }) => {
   const firebase = useContext(FirebaseContext);
-  //   const [pages, ] = useState(firebase.books.find((element)=>{return element.id ===bookId}).pages);
   const [template] = useState(firebase.books[bookId].template);
-
-  const parentId = PARENTID;
 
   const saveInputValue = (event) => {
     firebase.addPageValue(bookId, pageId, event.target.id, event.target.value);
@@ -38,7 +32,7 @@ export const Page = ({ bookId, pageId }) => {
 
   return (
     <div>
-      <div id={parentId}></div>
+      <div id={PARENTID}></div>
     </div>
   );
 };

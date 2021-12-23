@@ -13,15 +13,14 @@ export const Authentication = () => {
 
   const [signIn, setSignIn] = useState(false);
 
-  // const [user, setUser] = useState({});
-
   useEffect(() => {
     // const unsubscribe = auth.
-    console.log("AUTHENT useEffect 1")
+    console.log("AUTHENT useEffect 1");
     onAuthStateChanged(auth, (currentUser) => {
       firebase.setUser(currentUser);
     });
-    console.log("AUTHENT useEffect 2")
+    console.log("AUTHENT user", firebase.user);
+    //firebase.fetchBooks()
   }, []);
 
   const logOut = () => {

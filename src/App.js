@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Home } from "./pages/Home";
-import { TemplateCreator } from "./pages/TemplateCreator";
+import { TemplateCreator } from "./pages/templates/TemplateCreator";
 import { Navbar } from "./components/Navbar";
 import { Alert } from "./components/Alert";
 import { AlertState } from "./context/alert/AlertState";
@@ -9,6 +9,7 @@ import { FirebaseState } from "./context/firebase/FirebaseState";
 import { BookNavigation } from "./components/books/BookNavigation";
 import { BookCreator } from "./pages/BookCreator";
 import { Authentication } from "./pages/authentication/Authentication";
+import { TemplateLoader } from "./pages/templates/TemplateLoader";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
               <Route path={"/books"} component={BookNavigation} />
               <Route path={"/book_creator"} component={BookCreator} />
               <Route path={"/authentication"} component={Authentication} />
+              <Route path={"/template_loader"} component={TemplateLoader} />
             </Switch>
           </div>
         </BrowserRouter>

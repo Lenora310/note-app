@@ -9,17 +9,34 @@ import {
   FETCH_TEMPLATES,
   REMOVE_BOOK,
   SET_USER,
+  ADD_USER,
+  FETCH_USERS,
+  FETCH_PUBLIC_TEMPLATES,
+  CLOSE_LOADER,
 } from "../types";
 
 const handlers = {
   [SHOW_LOADER]: (state) => ({ ...state, loading: true }),
+  [CLOSE_LOADER]: (state) => ({ ...state, loading: false }),
   
-  [SET_USER]: (state, {payload}) => ({ ...state, user: payload.user }),
+  [SET_USER]: (state, {payload}) => {
+    //console.log("payload", payload);
+    const tmp={
+      ...state, 
+      currentUser: payload.user,
+   }
+   //console.log("tmp", tmp)
+    return tmp;
 
+  },
+  
+  
+  
+  // ({ ...state, currentUser: payload.user }),
 
   [REMOVE_NOTE]: (state, { payload }) => ({
     ...state,
-    notes: state.notes.filter((note) => note.id !== payload),
+    notes: state.notes.filter(note => note.id !== payload),
   }),
 
   // [REMOVE_BOOK]: (state, { payload }) => ({
@@ -29,20 +46,22 @@ const handlers = {
 
   [ADD_BOOK]: (state, { payload }) =>{
     const newBooks = state.books;
-    newBooks[payload.id]=payload.book;
+    newBooks[payload.bookId]=payload.book;
     return {
       ...state,
       books: newBooks
     }
   },
+
   [FETCH_BOOKS]: (state, { payload }) => ({
     ...state,
-    books: payload,
+    books: payload.books,
     loading: false,
   }),
 
   [ADD_BOOK_PAGE]: (state, { payload }) => {
     const newBooks = state.books;
+    console.log("[ADD_BOOK_PAGE] newBooks", newBooks)
     if(!newBooks[payload.bookId].pages){
       newBooks[payload.bookId].pages=[];
     }
@@ -62,17 +81,27 @@ const handlers = {
     };
   },
 
+  [ADD_TEMPLATE]: (state, { payload }) => {
+    const newTemplates = state.templates;
+    newTemplates[payload.templateId]=payload.template;
+    return {
+      ...state,
+     templates: newTemplates,
+    }
+  },
 
-
-  [ADD_TEMPLATE]: (state, { payload }) => ({
-    ...state,
-    templates: [...state.templates, payload],
-  }),
   [FETCH_TEMPLATES]: (state, { payload }) => ({
     ...state,
-    templates: payload,
+    templates: payload.templates,
     loading: false,
   }),
+
+  [FETCH_PUBLIC_TEMPLATES]: (state, { payload }) => ({
+    ...state,
+    publicTemplates: payload.templates,
+  
+  }),
+
 
   DEFAULT: (state) => state,
 };
