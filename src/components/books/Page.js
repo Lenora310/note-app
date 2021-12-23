@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from "react";
+import { FirebaseContext } from "../../context/firebase/firebaseContext";
+import { PARENTID } from "../../context/types";
+import { addPageElement } from "../../utilities/addPageElement";
 
 export const Page = ({ bookId, pageId }) => {
   const firebase = useContext(FirebaseContext);

@@ -36,7 +36,7 @@ const handlers = {
 
   [REMOVE_NOTE]: (state, { payload }) => ({
     ...state,
-    notes: state.notes.filter(note => note.id !== payload),
+    notes: state.notes.filter((note) => note.id !== payload),
   }),
 
   // [REMOVE_BOOK]: (state, { payload }) => ({
