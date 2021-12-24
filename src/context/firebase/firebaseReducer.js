@@ -19,20 +19,7 @@ const handlers = {
   [SHOW_LOADER]: (state) => ({ ...state, loading: true }),
   [CLOSE_LOADER]: (state) => ({ ...state, loading: false }),
   
-  [SET_USER]: (state, {payload}) => {
-    //console.log("payload", payload);
-    const tmp={
-      ...state, 
-      currentUser: payload.user,
-   }
-   //console.log("tmp", tmp)
-    return tmp;
-
-  },
-  
-  
-  
-  // ({ ...state, currentUser: payload.user }),
+  [SET_USER]: (state, {payload}) =>({ ...state, currentUser: payload.user }),
 
   [REMOVE_NOTE]: (state, { payload }) => ({
     ...state,

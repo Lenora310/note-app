@@ -6,7 +6,6 @@ import { auth } from "../../firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
 import {
   SHOW_LOADER,
-  REMOVE_NOTE,
   ADD_BOOK,
   FETCH_BOOKS,
   REMOVE_BOOK,
@@ -15,8 +14,6 @@ import {
   FETCH_TEMPLATES,
   ADD_PAGE_VALUE,
   SET_USER,
-  ADD_USER,
-  FETCH_USERS,
   FETCH_PUBLIC_TEMPLATES,
   CLOSE_LOADER,
 } from "../types";
@@ -40,26 +37,14 @@ export const FirebaseState = ({ children }) => {
   const setUser = (user) =>
     dispatch({ type: SET_USER, payload: { user } });
 
-  // const fetchUser = () => {
-  //   onAuthStateChanged(auth, (currentUser) => {
-  //     setUser(currentUser);
-  //   });
-  //   console.log("FETCH_USER user", state.currentUser);
-  //   // if(!state.currentUser){
-  //   //   console.log("FETCH_USER auth", auth);
-  //   //   console.log("FETCH_USER auth.currentUser", auth.currentUser);
-  //   //   setUser(auth.currentUser)
-  //   //   console.log("FETCH_USER user", state.currentUser);
-  //   // }
-  // }
 
-  const removeNote = async (id) => {
-    await axios.delete(`${url}/notes/${id}.json`);
-    dispatch({
-      type: REMOVE_NOTE,
-      payload: id,
-    });
-  };
+  // const removeNote = async (id) => {
+  //   await axios.delete(`${url}/notes/${id}.json`);
+  //   dispatch({
+  //     type: REMOVE_NOTE,
+  //     payload: id,
+  //   });
+  // };
 
   const fetchBooks = async () => {
     if(!state.currentUser){
@@ -161,6 +146,7 @@ export const FirebaseState = ({ children }) => {
       title: templateTitle,
       elements,
     };
+    
     try {
       const res = await axios.post(
         `${url}/users/${state.currentUser.uid}/templates.json`,
@@ -179,6 +165,34 @@ export const FirebaseState = ({ children }) => {
     } catch (e) {
       throw new Error(e.message);
     }
+  };
+
+  const downloadPublicTemplate = async (templateId) => {
+    const res = await axios.get(`${url}/templates/${templateId}.json`);
+    console.log("downloadPublicTemplate", res.data);
+    addTemplate(res.data.title, res.data.elements);
+    // const template = {
+    //   title: templateTitle,
+    //   elements,
+    // };
+    // try {
+    //   const res = await axios.post(
+    //     `${url}/users/${state.currentUser.uid}/templates.json`,
+    //     template
+    //   );
+    //   console.log("addTemplate", res.data);
+    //   const payload = {
+    //     template,
+    //     templateId: res.data.name,
+    //   };
+
+    //   dispatch({
+    //     type: ADD_TEMPLATE,
+    //     payload,
+    //   });
+    // } catch (e) {
+    //   throw new Error(e.message);
+    // }
   };
 
   const addBookPage = async (bookId) => {
@@ -243,7 +257,6 @@ export const FirebaseState = ({ children }) => {
 
         setUser,
         user: state.currentUser,
-        // fetchUser,
 
         addBook,
         fetchBooks,
@@ -255,6 +268,7 @@ export const FirebaseState = ({ children }) => {
         addTemplate,
         fetchTemplates,
         fetchPublicTemplates,
+        downloadPublicTemplate,
         templates: state.templates,
         publicTemplates: state.publicTemplates,
       }}

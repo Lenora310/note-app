@@ -7,7 +7,7 @@ import { Loader } from "../components/Loader";
 import { FirebaseContext } from "../context/firebase/firebaseContext";
 import { Link } from "react-router-dom";
 
-export const Home = () => {
+export const Books = () => {
   const { loading, fetchBooks, setUser, user } = useContext(FirebaseContext);
 
   useEffect(() => {

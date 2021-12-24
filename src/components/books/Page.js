@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { FirebaseContext } from "../../context/firebase/firebaseContext";
-import { PARENTID } from "../../context/types";
+import { PARENT_ID } from "../../context/types";
 import { addPageElement } from "../../utilities/addPageElement";
 
 export const Page = ({ bookId, pageId }) => {
@@ -12,11 +12,16 @@ export const Page = ({ bookId, pageId }) => {
   };
 
   useEffect(() => {
+    const parent = document.getElementById(PARENT_ID);
+    while (parent.firstChild) {
+      parent.firstChild.remove();
+    }
+
     template.elements.forEach((el) => {
-      const oldInstance = document.getElementById(el.elementId);
-      if (oldInstance) {
-        oldInstance.remove();
-      }
+      // const oldInstance = document.getElementById(el.elementId);
+      // if (oldInstance) {
+      //   oldInstance.remove();
+      // }
       addPageElement(el.parentId, el.elementTag, el.elementId, el.html);
       if (el.elementTag === "input" || el.elementTag === "textarea" ) {
         document.getElementById(el.elementId).onchange = saveInputValue;
@@ -35,7 +40,7 @@ export const Page = ({ bookId, pageId }) => {
 
   return (
     <div>
-      <div id={PARENTID}></div>
+      <div id={PARENT_ID}></div>
     </div>
   );
 };

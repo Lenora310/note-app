@@ -26,4 +26,5 @@ export const FETCH_TEMPLATES = 'FETCH_TEMPLATES'
 export const FETCH_PUBLIC_TEMPLATES = 'FETCH_PUBLIC_TEMPLATES'
 
 
-export const PARENTID=0
+export const PARENT_ID=0
+// export const PARENT_ID='templates-parent-element-id'

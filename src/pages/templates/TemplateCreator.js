@@ -4,7 +4,7 @@ import { AlertContext } from "../../context/alert/alertContext";
 import { FirebaseContext } from "../../context/firebase/firebaseContext";
 import { Form } from "../../components/form/Form";
 import { addPageElement } from "../../utilities/addPageElement";
-import { PARENTID } from "../../context/types";
+import { PARENT_ID } from "../../context/types";
 
 
 export const TemplateCreator = () => {
@@ -15,7 +15,7 @@ export const TemplateCreator = () => {
 
   const [title, setTitle] = useState("");
   const elementsInit = 
-    { parentId: PARENTID, elementTag: "div", elementId: draftId, html: "" };
+    { parentId: PARENT_ID, elementTag: "div", elementId: draftId, html: "" };
   const [elements, setElements] = useState([elementsInit]);
 
   const [id, setId] = useState(100);
@@ -99,7 +99,7 @@ export const TemplateCreator = () => {
   };
   const saveTemplate = () => {
     firebase
-      .addTemplate(firebase.user.uid, title, elements)
+      .addTemplate(title, elements)
       .then(() => {
         alert.show("Template was created", "success");
       })
@@ -155,7 +155,7 @@ export const TemplateCreator = () => {
 
           <Col className="col-8 template-creator-column draft">
             Draft
-            <div id={PARENTID}>
+            <div id={PARENT_ID}>
               <div id={draftId}></div>
             </div>
           </Col>
