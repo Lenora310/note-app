@@ -6,7 +6,6 @@ import { Form } from "../../components/form/Form";
 import { addPageElement } from "../../utilities/addPageElement";
 import { PARENT_ID } from "../../context/types";
 
-
 export const TemplateCreator = () => {
   const draftId = 2345; //todo change the constant
 
@@ -14,24 +13,34 @@ export const TemplateCreator = () => {
   const alert = useContext(AlertContext);
 
   const [title, setTitle] = useState("");
-  const elementsInit = 
-    { parentId: PARENT_ID, elementTag: "div", elementId: draftId, html: "" };
+  const [publish, setPublish] = useState(false);
+
+  const elementsInit = {
+    parentId: PARENT_ID,
+    elementTag: "div",
+    elementId: draftId,
+    html: "",
+  };
   const [elements, setElements] = useState([elementsInit]);
 
   const [id, setId] = useState(100);
   const [selected, setSelected] = useState(draftId);
   const [hovered, setHovered] = useState(draftId);
 
-
   const [showH3input, setshowH3input] = useState(false);
   const [showH1input, setshowH1input] = useState(false);
 
   const prevState = useRef({ selected, hovered });
   useEffect(() => {
-    if(elements.length===0){
-      addElement(elementsInit.parentId, elementsInit.elementTag,elementsInit.elementId, elementsInit.html);
+    if (elements.length === 0) {
+      addElement(
+        elementsInit.parentId,
+        elementsInit.elementTag,
+        elementsInit.elementId,
+        elementsInit.html
+      );
     }
-  }, [elements])
+  }, [elements]);
 
   useEffect(() => {
     const prevSelEl = document.getElementById(prevState.current.selected);
@@ -79,7 +88,11 @@ export const TemplateCreator = () => {
   const deleteElement = (event, elementId) => {
     event.stopPropagation();
     document.getElementById(elementId).remove();
-    setElements(elements.filter(el => el.elementId!==elementId && el.parentId!==elementId));
+    setElements(
+      elements.filter(
+        (el) => el.elementId !== elementId && el.parentId !== elementId
+      )
+    );
   };
 
   const getNewId = () => {
@@ -99,7 +112,7 @@ export const TemplateCreator = () => {
   };
   const saveTemplate = () => {
     firebase
-      .addTemplate(title, elements)
+      .addTemplate(title, elements, publish)
       .then(() => {
         alert.show("Template was created", "success");
       })
@@ -112,12 +125,31 @@ export const TemplateCreator = () => {
     <div>
       <h3>{title}</h3>
       <Form saveValue={setTitle} placeholder="Write template title" />
-      <Button onClick={() => saveTemplate()}>Save template</Button>
+      <div className="form-check">
+        <input
+          className="form-check-input"
+          type="checkbox"
+          value=""
+          id="flexCheckDefault"
+          onChange={()=> setPublish(!publish)}
+        />
+        <label className="form-check-label" for="flexCheckDefault">
+          Publish template
+        </label>
+      </div>
+      <Button className="btn-save" onClick={() => saveTemplate()}>Save template</Button>
+
+      
 
       <Container fluid>
         <Row className="template-creator-row">
           <Col className="template-creator-column add-tools">
-            <Button onClick={() => setshowH1input(!showH1input)}>Add h1</Button>
+            <Button
+              className="add-tool"
+              onClick={() => setshowH1input(!showH1input)}
+            >
+              Add h1
+            </Button>
             {showH1input ? (
               <Form
                 id="addH1Form"
@@ -127,11 +159,17 @@ export const TemplateCreator = () => {
             ) : null}
 
             <Button
+              className="add-tool"
               onClick={() => addElement(draftId, "input", getNewId(), "input")}
             >
               Add input
             </Button>
-            <Button onClick={() => setshowH3input(!showH3input)}>Add h3</Button>
+            <Button
+              className="add-tool"
+              onClick={() => setshowH3input(!showH3input)}
+            >
+              Add h3
+            </Button>
             {showH3input ? (
               <Form
                 id="addH3Form"
@@ -140,13 +178,15 @@ export const TemplateCreator = () => {
               />
             ) : null}
 
-            <Button
+            {/* <Button
+              className="add-tool"
               onClick={() => addElement(draftId, "p", getNewId(), "paragraph")}
             >
               Add paragraph
-            </Button>
+            </Button> */}
 
             <Button
+              className="add-tool"
               onClick={() => addElement(draftId, "textarea", getNewId(), "")}
             >
               Add text area
@@ -181,11 +221,9 @@ export const TemplateCreator = () => {
                       setHovered(el.elementId);
                     }}
                   >
-                    {/* <p> */}
                     <strong>
                       {el.elementId} &nbsp; {el.html}{" "}
                     </strong>
-                    {/* </p> */}
                     <button
                       type="button"
                       className="btn-close"

@@ -1,8 +1,6 @@
 // @import "bootstrap/functions";
 // @import "bootstrap/variables";
 
-
-
 // /* finally, import Bootstrap */
 // @import "bootstrap";
 
@@ -15,21 +13,24 @@
 
 @import "~bootstrap/scss/bootstrap";
 
-$theme-colors: (
-  primary: $purple
-);
+// {component-active-color: purple}
+
+// $theme-colors: (
+//   primary: $purple,
+//   component-active-color: purple
+// );
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 .note {
@@ -37,7 +38,7 @@ code {
   justify-content: space-between;
   align-items: center;
 
-  strong{
+  strong {
     margin-right: 1rem;
   }
 }
@@ -46,19 +47,20 @@ code {
   border-style: solid;
   border-width: 1px;
   border-color: black;
-  
 }
-.template-creator-row{
+.template-creator-row {
   height: 100vh;
 }
 
 .instruction {
   color: green;
 }
-.template-creator-column .list-group-item{
+.template-creator-column .list-group-item {
   z-index: 1;
 }
-.template-creator-column .list-group-item .btn-close{
+.template-creator-column .list-group-item .btn-close {
   z-index: 2;
 }
-
+.template-creator-column .add-tool, .btn-save {
+  margin: 5pt;
+}

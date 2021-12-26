@@ -14,7 +14,6 @@ export const Books = () => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
-
     // eslint-disable-next-line
   }, []);
 

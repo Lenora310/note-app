@@ -141,7 +141,7 @@ export const FirebaseState = ({ children }) => {
     }
   };
 
-  const addTemplate = async (templateTitle, elements) => {
+  const addTemplate = async (templateTitle, elements, publish) => {
     const template = {
       title: templateTitle,
       elements,
@@ -165,7 +165,30 @@ export const FirebaseState = ({ children }) => {
     } catch (e) {
       throw new Error(e.message);
     }
+
+    if(publish){
+      publishTemplate(templateTitle, elements);
+    }
   };
+
+  const publishTemplate = async (templateTitle, elements) => {
+    const template = {
+      title: templateTitle,
+      elements,
+    };
+    try {
+      const res = await axios.post(
+        `${url}/templates.json`,
+        template
+      );
+      console.log("publishTemplate", res.data);
+    } catch (e) {
+      throw new Error(e.message);
+    }
+  };
+
+
+
 
   const downloadPublicTemplate = async (templateId) => {
     const res = await axios.get(`${url}/templates/${templateId}.json`);

@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { Books } from "./pages/Books";
 import { TemplateCreator } from "./pages/templates/TemplateCreator";
 import { Navbar } from "./components/Navbar";
 import { Alert } from "./components/Alert";
@@ -20,7 +19,7 @@ function App() {
           <div className="container pt-4">
             <Alert />
             <Switch>
-              <Route path={"/"} exact component={Books} />
+              <Route path={"/"} exact component={Authentication} />
               <Route path={"/template_creator"} component={TemplateCreator} />
               <Route path={"/books"} component={BookNavigation} />
               <Route path={"/book_creator"} component={BookCreator} />
