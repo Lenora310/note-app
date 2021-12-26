@@ -32,6 +32,5 @@ export const Books = () => {
         <Button>Create new book</Button>
       </Link>
     </Fragment>
-    // </div>
   );
 };

@@ -1,19 +1,18 @@
 import React, { useState, useContext } from "react";
 import { AlertContext } from "../../context/alert/alertContext";
 
-
-export const Form = ({saveValue, placeholder}) => {
+export const Form = ({ saveValue, placeholder }) => {
   const [value, setValue] = useState("");
   const alert = useContext(AlertContext);
 
   const submitHandler = (event) => {
     event.preventDefault();
     if (value.trim()) {
-        saveValue(value.trim());
+      saveValue(value.trim());
     } else {
       alert.show("Enter text");
     }
-    setValue("")
+    setValue("");
   };
 
   return (

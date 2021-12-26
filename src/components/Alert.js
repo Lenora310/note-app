@@ -2,10 +2,7 @@ import React, { useContext } from "react";
 import { AlertContext } from "../context/alert/alertContext";
 
 export const Alert = () => {
-  // const alert=useContext(AlertContext) //получаем объект с ключами show, hide и alert,
-  //поэтому можно написать по-другому(как ниже) и сразу rozbalit объект по ключам
-
-  const { alert, hide } = useContext(AlertContext); 
+  const { alert, hide } = useContext(AlertContext);
   if (!alert.visible) {
     return null;
   }

@@ -15,12 +15,11 @@ export const Authentication = () => {
 
   useEffect(() => {
     // const unsubscribe = auth.
-    console.log("AUTHENT useEffect 1");
+    // console.log("AUTHENT useEffect 1");
     onAuthStateChanged(auth, (currentUser) => {
       firebase.setUser(currentUser);
     });
-    console.log("AUTHENT user", firebase.user);
-    //firebase.fetchBooks()
+    // console.log("AUTHENT user", firebase.user);
   }, []);
 
   const logOut = () => {
@@ -32,7 +31,6 @@ export const Authentication = () => {
         alert.show("Something went wrong", "danger");
       });
   };
-  // console.log("auth=", auth)
 
   return (
     <div>

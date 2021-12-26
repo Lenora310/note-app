@@ -9,8 +9,6 @@ import {
   FETCH_TEMPLATES,
   REMOVE_BOOK,
   SET_USER,
-  ADD_USER,
-  FETCH_USERS,
   FETCH_PUBLIC_TEMPLATES,
   CLOSE_LOADER,
 } from "../types";
@@ -18,26 +16,26 @@ import {
 const handlers = {
   [SHOW_LOADER]: (state) => ({ ...state, loading: true }),
   [CLOSE_LOADER]: (state) => ({ ...state, loading: false }),
-  
-  [SET_USER]: (state, {payload}) =>({ ...state, currentUser: payload.user }),
 
-  [REMOVE_NOTE]: (state, { payload }) => ({
-    ...state,
-    notes: state.notes.filter((note) => note.id !== payload),
-  }),
+  [SET_USER]: (state, { payload }) => ({ ...state, currentUser: payload.user }),
+
+  // [REMOVE_NOTE]: (state, { payload }) => ({
+  //   ...state,
+  //   notes: state.notes.filter((note) => note.id !== payload),
+  // }),
 
   // [REMOVE_BOOK]: (state, { payload }) => ({
   //   ...state,
   //   books: state.books.filter((book) => book.id !== payload),
   // }),
 
-  [ADD_BOOK]: (state, { payload }) =>{
+  [ADD_BOOK]: (state, { payload }) => {
     const newBooks = state.books;
-    newBooks[payload.bookId]=payload.book;
+    newBooks[payload.bookId] = payload.book;
     return {
       ...state,
-      books: newBooks
-    }
+      books: newBooks,
+    };
   },
 
   [FETCH_BOOKS]: (state, { payload }) => ({
@@ -48,20 +46,20 @@ const handlers = {
 
   [ADD_BOOK_PAGE]: (state, { payload }) => {
     const newBooks = state.books;
-    console.log("[ADD_BOOK_PAGE] newBooks", newBooks)
-    if(!newBooks[payload.bookId].pages){
-      newBooks[payload.bookId].pages=[];
+    console.log("[ADD_BOOK_PAGE] newBooks", newBooks);
+    if (!newBooks[payload.bookId].pages) {
+      newBooks[payload.bookId].pages = [];
     }
-    newBooks[payload.bookId].pages[payload.pageId]=payload.page;
+    newBooks[payload.bookId].pages[payload.pageId] = payload.page;
     return {
       ...state,
       books: newBooks,
     };
   },
 
-  [ADD_PAGE_VALUE]: (state, {payload}) =>{
+  [ADD_PAGE_VALUE]: (state, { payload }) => {
     const newBooks = state.books;
-    newBooks[payload.bookId].pages[payload.pageId].values=payload.newValues;
+    newBooks[payload.bookId].pages[payload.pageId].values = payload.newValues;
     return {
       ...state,
       books: newBooks,
@@ -70,11 +68,11 @@ const handlers = {
 
   [ADD_TEMPLATE]: (state, { payload }) => {
     const newTemplates = state.templates;
-    newTemplates[payload.templateId]=payload.template;
+    newTemplates[payload.templateId] = payload.template;
     return {
       ...state,
-     templates: newTemplates,
-    }
+      templates: newTemplates,
+    };
   },
 
   [FETCH_TEMPLATES]: (state, { payload }) => ({
@@ -86,9 +84,7 @@ const handlers = {
   [FETCH_PUBLIC_TEMPLATES]: (state, { payload }) => ({
     ...state,
     publicTemplates: payload.templates,
-  
   }),
-
 
   DEFAULT: (state) => state,
 };

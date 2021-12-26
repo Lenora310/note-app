@@ -2,8 +2,6 @@ import React, { useReducer } from "react";
 import axios from "axios";
 import { FirebaseContext } from "./firebaseContext";
 import { firebaseReducer } from "./firebaseReducer";
-import { auth } from "../../firebase-config";
-import { onAuthStateChanged } from "firebase/auth";
 import {
   SHOW_LOADER,
   ADD_BOOK,
@@ -34,9 +32,7 @@ export const FirebaseState = ({ children }) => {
 
   const showLoader = () => dispatch({ type: SHOW_LOADER });
   const closeLoader = () => dispatch({ type: CLOSE_LOADER });
-  const setUser = (user) =>
-    dispatch({ type: SET_USER, payload: { user } });
-
+  const setUser = (user) => dispatch({ type: SET_USER, payload: { user } });
 
   // const removeNote = async (id) => {
   //   await axios.delete(`${url}/notes/${id}.json`);
@@ -47,11 +43,11 @@ export const FirebaseState = ({ children }) => {
   // };
 
   const fetchBooks = async () => {
-    if(!state.currentUser){
-      console.log("USER IS NOT DEFINED!")
+    if (!state.currentUser) {
+      console.log("USER IS NOT DEFINED!");
       return;
     }
-    showLoader(); 
+    showLoader();
     const res = await axios.get(
       `${url}/users/${state.currentUser.uid}/books.json`
     );
@@ -146,7 +142,7 @@ export const FirebaseState = ({ children }) => {
       title: templateTitle,
       elements,
     };
-    
+
     try {
       const res = await axios.post(
         `${url}/users/${state.currentUser.uid}/templates.json`,
@@ -166,7 +162,7 @@ export const FirebaseState = ({ children }) => {
       throw new Error(e.message);
     }
 
-    if(publish){
+    if (publish) {
       publishTemplate(templateTitle, elements);
     }
   };
@@ -177,45 +173,17 @@ export const FirebaseState = ({ children }) => {
       elements,
     };
     try {
-      const res = await axios.post(
-        `${url}/templates.json`,
-        template
-      );
+      const res = await axios.post(`${url}/templates.json`, template);
       console.log("publishTemplate", res.data);
     } catch (e) {
       throw new Error(e.message);
     }
   };
 
-
-
-
   const downloadPublicTemplate = async (templateId) => {
     const res = await axios.get(`${url}/templates/${templateId}.json`);
     console.log("downloadPublicTemplate", res.data);
     addTemplate(res.data.title, res.data.elements);
-    // const template = {
-    //   title: templateTitle,
-    //   elements,
-    // };
-    // try {
-    //   const res = await axios.post(
-    //     `${url}/users/${state.currentUser.uid}/templates.json`,
-    //     template
-    //   );
-    //   console.log("addTemplate", res.data);
-    //   const payload = {
-    //     template,
-    //     templateId: res.data.name,
-    //   };
-
-    //   dispatch({
-    //     type: ADD_TEMPLATE,
-    //     payload,
-    //   });
-    // } catch (e) {
-    //   throw new Error(e.message);
-    // }
   };
 
   const addBookPage = async (bookId) => {

@@ -16,14 +16,9 @@ export const Page = ({ bookId, pageId }) => {
     while (parent.firstChild) {
       parent.firstChild.remove();
     }
-
     template.elements.forEach((el) => {
-      // const oldInstance = document.getElementById(el.elementId);
-      // if (oldInstance) {
-      //   oldInstance.remove();
-      // }
       addPageElement(el.parentId, el.elementTag, el.elementId, el.html);
-      if (el.elementTag === "input" || el.elementTag === "textarea" ) {
+      if (el.elementTag === "input" || el.elementTag === "textarea") {
         document.getElementById(el.elementId).onchange = saveInputValue;
       }
     });

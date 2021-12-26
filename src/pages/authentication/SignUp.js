@@ -1,12 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AlertContext } from "../../context/alert/alertContext";
 import { FirebaseContext } from "../../context/firebase/firebaseContext";
-import {
-  createUserWithEmailAndPassword,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase-config";
 import { Button } from "react-bootstrap";
-
 
 export const SignUp = () => {
   const alert = useContext(AlertContext);
@@ -30,7 +27,7 @@ export const SignUp = () => {
 
     createUserWithEmailAndPassword(auth, loginValue, passwordValue)
       .then(() => {
-        firebase.addUser(auth.currentUser)
+        firebase.addUser(auth.currentUser);
         alert.show("User was created", "success");
       })
       .catch(() => {

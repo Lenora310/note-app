@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { FirebaseContext } from "../context/firebase/firebaseContext";
 import { Link } from "react-router-dom";
-import { Button,  Col,  Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import { Form } from "../components/form/Form";
 import { AlertContext } from "../context/alert/alertContext";
 import { PARENT_ID } from "../context/types";
@@ -24,7 +24,9 @@ export const BookCreator = () => {
   }, []);
 
   useEffect(() => {
-    const prevSelEl = document.getElementById(prevState.current.selectedTemplate);
+    const prevSelEl = document.getElementById(
+      prevState.current.selectedTemplate
+    );
     if (prevSelEl) {
       prevSelEl.classList.remove("active");
     }
@@ -62,26 +64,24 @@ export const BookCreator = () => {
     <div>
       <h1 className="instruction"> Choose from your templates </h1>
 
-
       <Container fluid>
         <Row>
           <Col className="public-templates-list">
-            
-      <div className="list-group" role="tablist">
-        {Object.keys(templates).map((id) => (
-          <button
-            key={id}
-            id={id}
-            type="button"
-            className="list-group-item list-group-item-action"
-            role="tab"
-            data-bs-toggle="list"
-            onClick={() => setSelectedTemplate(id)}
-          >
-            {templates[id].title}
-          </button>
-        ))}
-      </div>
+            <div className="list-group" role="tablist">
+              {Object.keys(templates).map((id) => (
+                <button
+                  key={id}
+                  id={id}
+                  type="button"
+                  className="list-group-item list-group-item-action"
+                  role="tab"
+                  data-bs-toggle="list"
+                  onClick={() => setSelectedTemplate(id)}
+                >
+                  {templates[id].title}
+                </button>
+              ))}
+            </div>
           </Col>
 
           <Col className="col-8 template-preview">
@@ -92,14 +92,12 @@ export const BookCreator = () => {
         </Row>
       </Container>
 
-
-
       <h1 className="instruction"> or</h1>
       <Link to={{ pathname: `/template_creator` }}>
         <Button>Create new template</Button>
       </Link>
-      <br/>
-      <br/>
+      <br />
+      <br />
       <Link to={{ pathname: `/template_loader` }}>
         <Button>Download public template</Button>
       </Link>

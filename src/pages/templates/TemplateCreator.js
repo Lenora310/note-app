@@ -131,15 +131,15 @@ export const TemplateCreator = () => {
           type="checkbox"
           value=""
           id="flexCheckDefault"
-          onChange={()=> setPublish(!publish)}
+          onChange={() => setPublish(!publish)}
         />
         <label className="form-check-label" for="flexCheckDefault">
           Publish template
         </label>
       </div>
-      <Button className="btn-save" onClick={() => saveTemplate()}>Save template</Button>
-
-      
+      <Button className="btn-save" onClick={() => saveTemplate()}>
+        Save template
+      </Button>
 
       <Container fluid>
         <Row className="template-creator-row">
