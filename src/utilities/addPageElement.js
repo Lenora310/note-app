@@ -6,4 +6,5 @@ export const addPageElement = (parentId, elementTag, elementId, html) => {
   elementToAdd.setAttribute("id", elementId);
   elementToAdd.innerHTML = html;
   parentElement.appendChild(elementToAdd);
+  return elementToAdd;
 };

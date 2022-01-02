@@ -45,7 +45,10 @@ export const BookCreator = () => {
       }
 
       templates[selectedTemplate].elements.forEach((el) => {
-        addPageElement(el.parentId, el.elementTag, el.elementId, el.html);
+        const newElement = addPageElement(el.parentId, el.elementTag, el.elementId, el.html);
+        if(el.elementTag==="input"|| el.elementTag==="textarea"){
+          newElement.setAttribute("disabled", true);
+        }
       });
     }
   }, [selectedTemplate]);

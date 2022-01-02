@@ -43,7 +43,10 @@ export const TemplateLoader = () => {
       }
 
       publicTemplates[selected].elements.forEach((el) => {
-        addPageElement(el.parentId, el.elementTag, el.elementId, el.html);
+        const newElement = addPageElement(el.parentId, el.elementTag, el.elementId, el.html);
+        if(el.elementTag==="input"|| el.elementTag==="textarea"){
+          newElement.setAttribute("disabled", true);
+        }
       });
     }
   }, [selected]);
@@ -80,6 +83,7 @@ export const TemplateLoader = () => {
           </Col>
 
           <Col className="col-8 template-preview">
+            <h3 className="template-preview instruction">Overview</h3>
             <div>
               <div id={PARENT_ID}></div>
             </div>

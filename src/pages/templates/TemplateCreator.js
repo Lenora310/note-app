@@ -221,9 +221,14 @@ export const TemplateCreator = () => {
                       setHovered(el.elementId);
                     }}
                   >
-                    <strong>
-                      {el.elementId} &nbsp; {el.html}{" "}
-                    </strong>
+                    {el.elementId === draftId ? (
+                      <strong>All elements</strong>
+                    ) : (
+                      <strong>
+                        {el.elementId} &nbsp; {el.elementTag}{" "}
+                      </strong>
+                    )}
+
                     <button
                       type="button"
                       className="btn-close"

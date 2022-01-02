@@ -243,25 +243,25 @@ export const FirebaseState = ({ children }) => {
   return (
     <FirebaseContext.Provider
       value={{
-        showLoader,
         loading: state.loading,
 
-        setUser,
         user: state.currentUser,
+        setUser,
 
+        books: state.books,
         addBook,
         fetchBooks,
         removeBook,
-        books: state.books,
+
         addBookPage,
         addPageValue,
 
+        templates: state.templates,
+        publicTemplates: state.publicTemplates,
         addTemplate,
         fetchTemplates,
         fetchPublicTemplates,
         downloadPublicTemplate,
-        templates: state.templates,
-        publicTemplates: state.publicTemplates,
       }}
     >
       {children}
