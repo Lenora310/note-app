@@ -56,7 +56,7 @@ export const SignIn = () => {
           <input type="checkbox" value="remember-me" /> Remember me
         </label>
       </div>
-      <Button className="w-100 btn btn-lg btn-primary" type="submit">
+      <Button className="w-100 btn btn-lg btn-primary sign" type="submit">
         Sign in
       </Button>
     </form>

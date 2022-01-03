@@ -34,14 +34,14 @@ export const Authentication = () => {
 
   return (
     <div>
-      <Button onClick={() => setSignIn(true)}>Sign in</Button>
-      <Button onClick={() => setSignIn(false)}>Sign up</Button>
+      <Button className="btn btn-light" onClick={() => setSignIn(true)}>Sign in</Button>
+      <Button className="btn btn-dark" onClick={() => setSignIn(false)}>Sign up</Button>
 
       {signIn ? <SignIn /> : <SignUp />}
 
-      <h1>Hello, {firebase.user?.email}</h1>
+      {firebase.user ? <h1>Hello, {firebase.user.email}</h1> : null}
 
-      <Button onClick={logOut}> Sign Out </Button>
+      <Button className="btn btn-secondary" onClick={logOut}> Sign Out </Button>
     </div>
   );
 };
