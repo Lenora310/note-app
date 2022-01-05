@@ -24,7 +24,7 @@ export const Books = () => {
 
   return (
     <Fragment>
-      <h3>Your books</h3>
+      <h1>Your books</h1>
 
       {loading ? <Loader /> : <BookList />}
 

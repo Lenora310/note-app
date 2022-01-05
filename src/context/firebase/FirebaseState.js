@@ -73,7 +73,6 @@ export const FirebaseState = ({ children }) => {
       date: new Date().toJSON(),
       template,
     };
-
     try {
       const res = await axios.post(
         `${url}/users/${state.currentUser.uid}/books.json`,
@@ -95,11 +94,16 @@ export const FirebaseState = ({ children }) => {
   };
 
   const removeBook = async (id) => {
-    await axios.delete(`${url}/books/${id}.json`);
+    try {
+       await axios.delete(`${url}/users/${state.currentUser.uid}/books/${id}.json`);
     dispatch({
       type: REMOVE_BOOK,
       payload: id,
     });
+    } catch (e) {
+      throw new Error(e.message);
+    }
+   
   };
 
   const fetchTemplates = async () => {

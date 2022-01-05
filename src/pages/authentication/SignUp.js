@@ -43,41 +43,41 @@ export const SignUp = () => {
         <input
           type="email"
           className="form-control"
-          id="floatingInput"
+          id="floatingInputSignUp"
           placeholder="login"
           onChange={(event) => setLoginValue(event.target.value)}
         />
-        <label htmlFor="floatingInput">Email</label>
+        <label htmlFor="floatingInputSignUp">Email</label>
       </div>
       <div className="form-floating">
         <input
           type="password"
           className="form-control"
-          id="floatingPassword"
+          id="floatingPasswordSignUp"
           placeholder="Password"
           onChange={(event) => setPasswordValue(event.target.value)}
         />
-        <label htmlFor="floatingPassword">Password</label>
+        <label htmlFor="floatingPasswordSignUp">Password</label>
       </div>
       <div className="form-floating">
         <input
           type="password"
           className="form-control"
-          id="floatingPasswordCopy"
+          id="floatingPasswordCopySignUp"
           placeholder="Repeat password"
           onChange={(event) => setPasswordCopyValue(event.target.value)}
         />
-        <label htmlFor="floatingPasswordCopy">Repeat password</label>
+        <label htmlFor="floatingPasswordCopySignUp">Repeat password</label>
       </div>
 
-      <div className="checkbox mb-3">
+      {/* <div className="checkbox mb-3">
         <label>
           <input type="checkbox" value="remember-me" /> Remember me
         </label>
-      </div>
-      <Button className="w-100 btn btn-lg btn-primary" type="submit">
+      </div> */}
+      <button className="w-100 btn btn-lg btn-primary" type="submit">
         Sign up
-      </Button>
+      </button>
     </form>
   );
 };

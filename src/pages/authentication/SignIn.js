@@ -29,36 +29,36 @@ export const SignIn = () => {
 
   return (
     <form className="sign-in-form" onSubmit={signIn}>
-      <h1 className="h3 mb-3 fw-normal">Sign in</h1>
+      <h1 className="h1 mb-3 fw-normal">Sign in</h1>
 
       <div className="form-floating">
         <input
           className="form-control"
-          id="floatingInput"
+          id="floatingInputSignIn"
           placeholder="login"
           onChange={(event) => setLoginValue(event.target.value)}
         />
-        <label htmlFor="floatingInput">Login</label>
+        <label htmlFor="floatingInputSignIn">Login</label>
       </div>
       <div className="form-floating">
         <input
           type="password"
           className="form-control"
-          id="floatingPassword"
+          id="floatingPasswordSignIn"
           placeholder="Password"
           onChange={(event) => setPasswordValue(event.target.value)}
         />
-        <label htmlFor="floatingPassword">Password</label>
+        <label htmlFor="floatingPasswordSignIn">Password</label>
       </div>
 
-      <div className="checkbox mb-3">
+      {/* <div className="checkbox mb-3">
         <label>
           <input type="checkbox" value="remember-me" /> Remember me
         </label>
-      </div>
-      <Button className="w-100 btn btn-lg btn-primary sign" type="submit">
+      </div> */}
+      <button className="w-100 btn btn-lg btn-primary sign" type="submit">
         Sign in
-      </Button>
+      </button>
     </form>
   );
 };

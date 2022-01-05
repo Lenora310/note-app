@@ -18,10 +18,10 @@ export const TemplateLoader = () => {
   }, []);
 
   const prevState = useRef({ selected });
-  useEffect(() => {
-    fetchPublicTemplates();
-    // eslint-disable-next-line
-  }, []);
+  // useEffect(() => {
+  //   fetchPublicTemplates();
+  //   // eslint-disable-next-line
+  // }, []);
 
   useEffect(() => {
     const prevSelEl = document.getElementById(prevState.current.selected);
@@ -43,8 +43,13 @@ export const TemplateLoader = () => {
       }
 
       publicTemplates[selected].elements.forEach((el) => {
-        const newElement = addPageElement(el.parentId, el.elementTag, el.elementId, el.html);
-        if(el.elementTag==="input"|| el.elementTag==="textarea"){
+        const newElement = addPageElement(
+          el.parentId,
+          el.elementTag,
+          el.elementId,
+          el.html
+        );
+        if (el.elementTag === "input" || el.elementTag === "textarea") {
           newElement.setAttribute("disabled", true);
         }
       });
@@ -62,6 +67,7 @@ export const TemplateLoader = () => {
 
   return (
     <div>
+      <h1>Download public template</h1>
       <Container fluid>
         <Row>
           <Col className="public-templates-list">
@@ -82,16 +88,20 @@ export const TemplateLoader = () => {
             </div>
           </Col>
 
-          <Col className="col-8 template-preview">
-            <h3 className="template-preview instruction">Overview</h3>
+          <Col className="col-8 template-preview-column">
             <div>
-              <div id={PARENT_ID}></div>
+              {selected ? (
+                <div>
+                  <h3 className="instruction">Overview</h3>
+                  <h2>{publicTemplates[selected].title}</h2>
+                </div>
+              ) : null}
+
+              <div className="template-preview" id={PARENT_ID}></div>
             </div>
           </Col>
         </Row>
       </Container>
-      <br />
-      <br />
       <Button onClick={downloadTemplate}>Download template</Button>
     </div>
   );

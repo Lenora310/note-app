@@ -23,10 +23,10 @@ const handlers = {
   //   notes: state.notes.filter((note) => note.id !== payload),
   // }),
 
-  // [REMOVE_BOOK]: (state, { payload }) => ({
-  //   ...state,
-  //   books: state.books.filter((book) => book.id !== payload),
-  // }),
+  [REMOVE_BOOK]: (state, { payload }) => ({
+    ...state,
+    books: state.books.filter((book) => book.id !== payload),
+  }),
 
   [ADD_BOOK]: (state, { payload }) => {
     const newBooks = state.books;

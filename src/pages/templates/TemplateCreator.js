@@ -27,8 +27,8 @@ export const TemplateCreator = () => {
   const [selected, setSelected] = useState(draftId);
   const [hovered, setHovered] = useState(draftId);
 
+  const [showParagraphInput, setshowParagraphInput] = useState(false);
   const [showH3input, setshowH3input] = useState(false);
-  const [showH1input, setshowH1input] = useState(false);
 
   const prevState = useRef({ selected, hovered });
   useEffect(() => {
@@ -100,15 +100,15 @@ export const TemplateCreator = () => {
     return id;
   };
 
-  const addH1Handler = (value) => {
-    const elementId = getNewId();
-    addElement(draftId, "h1", elementId, value.trim());
-    setshowH1input(false);
-  };
   const addH3Handler = (value) => {
     const elementId = getNewId();
     addElement(draftId, "h3", elementId, value.trim());
     setshowH3input(false);
+  };
+  const addParagraphHandler = (value) => {
+    const elementId = getNewId();
+    addElement(draftId, "p", elementId, value.trim());
+    setshowParagraphInput(false);
   };
   const saveTemplate = () => {
     firebase
@@ -123,6 +123,7 @@ export const TemplateCreator = () => {
 
   return (
     <div>
+      <h1>Create template</h1>
       <h3>{title}</h3>
       <Form saveValue={setTitle} placeholder="Write template title" />
       <div className="form-check">
@@ -146,14 +147,14 @@ export const TemplateCreator = () => {
           <Col className="template-creator-column add-tools">
             <Button
               className="add-tool"
-              onClick={() => setshowH1input(!showH1input)}
+              onClick={() => setshowH3input(!showH3input)}
             >
-              Add h1
+              Add h3
             </Button>
-            {showH1input ? (
+            {showH3input ? (
               <Form
-                id="addH1Form"
-                saveValue={addH1Handler}
+                id="addH3Form"
+                saveValue={addH3Handler}
                 placeholder="Write title"
               />
             ) : null}
@@ -166,15 +167,15 @@ export const TemplateCreator = () => {
             </Button>
             <Button
               className="add-tool"
-              onClick={() => setshowH3input(!showH3input)}
+              onClick={() => setshowParagraphInput(!showParagraphInput)}
             >
-              Add h3
+              Add paragraph
             </Button>
-            {showH3input ? (
+            {showParagraphInput ? (
               <Form
-                id="addH3Form"
-                saveValue={addH3Handler}
-                placeholder="Write h3 title"
+                id="addParagraphForm"
+                saveValue={addParagraphHandler}
+                placeholder="Write paragraph title"
               />
             ) : null}
 
@@ -213,11 +214,9 @@ export const TemplateCreator = () => {
                     id={el.elementId + "-layer"}
                     key={el.elementId}
                     onClick={() => {
-                      console.log("li with id=", el.elementId, "clicked");
                       setSelected(el.elementId);
                     }}
                     onMouseEnter={() => {
-                      console.log("li hover was changed to ", el.elementId);
                       setHovered(el.elementId);
                     }}
                   >

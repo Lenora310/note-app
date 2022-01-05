@@ -48,19 +48,13 @@ export const Book = (props) => {
     <div>
       <h1>{books[id].title}</h1>
 
-      <br />
-      <Button onClick={previousPage}>Previous</Button>
-      <br />
-      <br />
-
+    
       <Page bookId={id} pageId={pages[currentPage]} />
       <p>Page number: {currentPage}</p>
 
-      <br />
-      <br />
-      <Button onClick={nextPage}>Next</Button>
-      <br />
-      <br />
+      <button type="button" className="btn btn-secondary" onClick={previousPage}>Previous</button>
+      <button type="button" className="btn btn-secondary" onClick={nextPage}>Next</button>
+
       <Button onClick={addPage}>Add new page</Button>
     </div>
   );

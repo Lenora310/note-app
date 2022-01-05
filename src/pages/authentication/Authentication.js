@@ -14,12 +14,9 @@ export const Authentication = () => {
   const [signIn, setSignIn] = useState(false);
 
   useEffect(() => {
-    // const unsubscribe = auth.
-    // console.log("AUTHENT useEffect 1");
     onAuthStateChanged(auth, (currentUser) => {
       firebase.setUser(currentUser);
     });
-    // console.log("AUTHENT user", firebase.user);
   }, []);
 
   const logOut = () => {
@@ -34,14 +31,48 @@ export const Authentication = () => {
 
   return (
     <div>
-      <Button className="btn btn-light" onClick={() => setSignIn(true)}>Sign in</Button>
-      <Button className="btn btn-dark" onClick={() => setSignIn(false)}>Sign up</Button>
+      {firebase.user ? (
+        <div>
+          <h2>Hello, {firebase.user.email}</h2>
 
-      {signIn ? <SignIn /> : <SignUp />}
+          <button className="btn btn-secondary" onClick={logOut}>
+            Sign Out
+          </button>
+        </div>
+      ) : (
+        <div>
+          {/* <ul className="nav nav-tabs">
+            <li className="active">
+              <a data-toggle="tab" href="#signIn">
+                Sign in
+              </a>
+            </li>
+            <li>
+              <a data-toggle="tab" href="#signUp">
+                Sign up
+              </a>
+            </li>
+          </ul>
 
-      {firebase.user ? <h1>Hello, {firebase.user.email}</h1> : null}
+          <div className="tab-content">
+            <div id="signIn" className="tab-pane fade in active">
+              <SignIn />
+            </div>
+            <div id="signUp" className="tab-pane fade">
+              <SignUp />
+            </div>
+          </div> */}
 
-      <Button className="btn btn-secondary" onClick={logOut}> Sign Out </Button>
+          <button className="btn btn-light" onClick={() => setSignIn(true)}>
+            Sign in
+          </button>
+          <button className="btn btn-light" onClick={() => setSignIn(false)}>
+            Sign up
+          </button>
+
+          {signIn ? <SignIn /> : <SignUp />}
+        </div>
+      )}
     </div>
   );
 };

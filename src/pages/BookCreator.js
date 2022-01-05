@@ -45,8 +45,13 @@ export const BookCreator = () => {
       }
 
       templates[selectedTemplate].elements.forEach((el) => {
-        const newElement = addPageElement(el.parentId, el.elementTag, el.elementId, el.html);
-        if(el.elementTag==="input"|| el.elementTag==="textarea"){
+        const newElement = addPageElement(
+          el.parentId,
+          el.elementTag,
+          el.elementId,
+          el.html
+        );
+        if (el.elementTag === "input" || el.elementTag === "textarea") {
           newElement.setAttribute("disabled", true);
         }
       });
@@ -65,6 +70,11 @@ export const BookCreator = () => {
 
   return (
     <div>
+      <Link to={{ pathname: `/books` }}>
+        <button type="button" className="btn btn-secondary">
+          Back to your books
+        </button>
+      </Link>
       <h1 className="instruction"> Choose from your templates </h1>
 
       <Container fluid>
@@ -99,8 +109,7 @@ export const BookCreator = () => {
       <Link to={{ pathname: `/template_creator` }}>
         <Button>Create new template</Button>
       </Link>
-      <br />
-      <br />
+
       <Link to={{ pathname: `/template_loader` }}>
         <Button>Download public template</Button>
       </Link>
@@ -110,8 +119,6 @@ export const BookCreator = () => {
 
       <h2 className="instruction">Title: </h2>
       <h2>{bookTitle}</h2>
-      <br />
-      <br />
 
       <Button onClick={createBook}>Create new book</Button>
     </div>

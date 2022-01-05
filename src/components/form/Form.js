@@ -24,6 +24,7 @@ export const Form = ({ saveValue, placeholder }) => {
           placeholder={placeholder}
           value={value}
           onChange={(event) => setValue(event.target.value)}
+          onBlur={submitHandler}
         ></input>
       </div>
     </form>
