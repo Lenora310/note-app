@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import { AlertContext } from "../../context/alert/alertContext";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase-config";
-import { Button } from "react-bootstrap";
 
 export const SignIn = () => {
   const alert = useContext(AlertContext);

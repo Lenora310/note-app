@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect, useContext } from "react";
-import { Button } from "react-bootstrap";
 import { BookList } from "../components/books/BookList";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase-config";
@@ -23,7 +22,7 @@ export const Books = () => {
   }, [user]);
 
   return (
-    <Fragment className="books-page">
+    <Fragment>
       <h1>Your books</h1>
 
       {loading ? <Loader /> : <BookList />}

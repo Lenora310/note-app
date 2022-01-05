@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { Button, Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { AlertContext } from "../../context/alert/alertContext";
 import { FirebaseContext } from "../../context/firebase/firebaseContext";
 import { Form } from "../../components/form/Form";
@@ -7,7 +7,7 @@ import { addPageElement } from "../../utilities/addPageElement";
 import { PARENT_ID } from "../../context/types";
 
 export const TemplateCreator = () => {
-  const draftId = "preview-parent-element-id"; 
+  const draftId = "preview-parent-element-id";
 
   const firebase = useContext(FirebaseContext);
   const alert = useContext(AlertContext);
@@ -24,13 +24,12 @@ export const TemplateCreator = () => {
   const [elements, setElements] = useState([elementsInit]);
 
   const [id, setId] = useState(100);
-  const [selected, setSelected] = useState(draftId);
   const [hovered, setHovered] = useState(draftId);
 
   const [showParagraphInput, setshowParagraphInput] = useState(false);
   const [showH3input, setshowH3input] = useState(false);
 
-  const prevState = useRef({ selected, hovered });
+  const prevState = useRef({ hovered });
   useEffect(() => {
     if (elements.length === 0) {
       addElement(
@@ -41,25 +40,6 @@ export const TemplateCreator = () => {
       );
     }
   }, [elements]);
-
-  useEffect(() => {
-    const prevSelEl = document.getElementById(prevState.current.selected);
-    const prevSelLayer = document.getElementById(
-      prevState.current.selected + "-layer"
-    );
-    const selEl = document.getElementById(selected);
-    const selLayer = document.getElementById(selected + "-layer");
-
-    if (prevSelEl && prevSelLayer) {
-      prevSelEl.style.removeProperty("background-color");
-      prevSelLayer.style.removeProperty("color");
-    }
-
-    selEl.style.backgroundColor = "rgba(0,255,0,0.2)";
-    selLayer.style.color = "green";
-
-    prevState.current.selected = selected;
-  }, [selected]);
 
   useEffect(() => {
     const prevHovEl = document.getElementById(prevState.current.hovered);
@@ -121,6 +101,18 @@ export const TemplateCreator = () => {
         alert.show(`Something went wrong: ${e.message}`, "danger");
       });
   };
+  const layersSwitch = (tag, html) => {
+    switch (tag) {
+      case "h3":
+        return html;
+      case "p":
+        return html;
+      case "div":
+        return "All elements";
+      default:
+        return tag;
+    }
+  };
 
   return (
     <div>
@@ -135,18 +127,24 @@ export const TemplateCreator = () => {
           id="flexCheckDefault"
           onChange={() => setPublish(!publish)}
         />
-        <label className="form-check-label" for="flexCheckDefault">
+        <label className="form-check-label" htmlFor="flexCheckDefault">
           Publish template
         </label>
       </div>
-      <button type="button" className="btn btn-primary btn-save" onClick={() => saveTemplate()}>
+      <button
+        type="button"
+        className="btn btn-primary btn-save"
+        onClick={() => saveTemplate()}
+      >
         Save template
       </button>
 
       <Container fluid>
         <Row className="template-creator-row">
           <Col className="template-creator-column add-tools">
-            <button type="button" className="btn btn-primary add-tool"
+            <button
+              type="button"
+              className="btn btn-outline-primary add-tool"
               onClick={() => setshowH3input(!showH3input)}
             >
               Add h3
@@ -159,12 +157,16 @@ export const TemplateCreator = () => {
               />
             ) : null}
 
-            <button type="button" className="btn btn-primary add-tool"
+            <button
+              type="button"
+              className="btn btn-outline-primary add-tool"
               onClick={() => addElement(draftId, "input", getNewId(), "input")}
             >
               Add input
             </button>
-            <button type="button" className="btn btn-primary add-tool"
+            <button
+              type="button"
+              className="btn btn-outline-primary add-tool"
               onClick={() => setshowParagraphInput(!showParagraphInput)}
             >
               Add paragraph
@@ -177,7 +179,9 @@ export const TemplateCreator = () => {
               />
             ) : null}
 
-            <button type="button" className="btn btn-primary add-tool"
+            <button
+              type="button"
+              className="btn btn-outline-primary add-tool"
               onClick={() => addElement(draftId, "textarea", getNewId(), "")}
             >
               Add text area
@@ -203,20 +207,11 @@ export const TemplateCreator = () => {
                     className="list-group-item"
                     id={el.elementId + "-layer"}
                     key={el.elementId}
-                    onClick={() => {
-                      setSelected(el.elementId);
-                    }}
                     onMouseEnter={() => {
                       setHovered(el.elementId);
                     }}
                   >
-                    {el.elementId === draftId ? (
-                      <strong>All elements</strong>
-                    ) : (
-                      <strong>
-                        {el.elementId} &nbsp; {el.elementTag}{" "}
-                      </strong>
-                    )}
+                    <strong> {layersSwitch(el.elementTag, el.html)} </strong>
 
                     <button
                       type="button"

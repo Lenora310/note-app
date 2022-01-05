@@ -1,13 +1,10 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { AlertContext } from "../../context/alert/alertContext";
-import { FirebaseContext } from "../../context/firebase/firebaseContext";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase-config";
-import { Button } from "react-bootstrap";
 
 export const SignUp = () => {
   const alert = useContext(AlertContext);
-  const firebase = useContext(FirebaseContext);
 
   const [loginValue, setLoginValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");

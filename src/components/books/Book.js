@@ -1,10 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Page } from "./Page";
 import { FirebaseContext } from "../../context/firebase/firebaseContext";
-import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { auth } from "../../firebase-config";
-import { onAuthStateChanged } from "firebase/auth";
 
 export const Book = (props) => {
   const { books, setUser } = useContext(FirebaseContext);

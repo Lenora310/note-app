@@ -1,4 +1,3 @@
-import React from "react";
 
 export const addPageElement = (parentId, elementTag, elementId, html) => {
   let parentElement = document.getElementById(parentId);
