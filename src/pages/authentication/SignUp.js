@@ -27,11 +27,11 @@ export const SignUp = () => {
 
     createUserWithEmailAndPassword(auth, loginValue, passwordValue)
       .then(() => {
-        firebase.addUser(auth.currentUser);
         alert.show("User was created", "success");
       })
-      .catch(() => {
-        alert.show("Something went wrong", "danger");
+      .catch((e) => {
+        console.log(e);
+        alert.show(`Something went wrong: ${e.message}`, "danger");
       });
   };
 
@@ -69,12 +69,6 @@ export const SignUp = () => {
         />
         <label htmlFor="floatingPasswordCopySignUp">Repeat password</label>
       </div>
-
-      {/* <div className="checkbox mb-3">
-        <label>
-          <input type="checkbox" value="remember-me" /> Remember me
-        </label>
-      </div> */}
       <button className="w-100 btn btn-lg btn-primary" type="submit">
         Sign up
       </button>

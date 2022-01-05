@@ -2,11 +2,12 @@ import React, { useState, useContext, useEffect } from "react";
 import { Page } from "./Page";
 import { FirebaseContext } from "../../context/firebase/firebaseContext";
 import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { auth } from "../../firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
 
 export const Book = (props) => {
-  const {books, setUser} = useContext(FirebaseContext);
+  const { books, setUser } = useContext(FirebaseContext);
   const { addBookPage } = useContext(FirebaseContext);
 
   const [id] = useState(props.match.params.id);
@@ -45,17 +46,39 @@ export const Book = (props) => {
   // }, []);
 
   return (
-    <div>
+    <div className="book">
+      <Link to={{ pathname: `/books` }}>
+        <button type="button" className="btn btn-secondary back">
+          Back to your books
+        </button>
+      </Link>
       <h1>{books[id].title}</h1>
 
-    
-      <Page bookId={id} pageId={pages[currentPage]} />
-      <p>Page number: {currentPage}</p>
+      <span className="book-page-content">
+        <Page bookId={id} pageId={pages[currentPage]} />
+        <p>Page number: {currentPage}</p>
 
-      <button type="button" className="btn btn-secondary" onClick={previousPage}>Previous</button>
-      <button type="button" className="btn btn-secondary" onClick={nextPage}>Next</button>
+        <div className="btn-group">
+          <button
+            type="button"
+            className="btn btn-outline-primary btn-block"
+            onClick={previousPage}
+          >
+            Previous
+          </button>
+          <button
+            type="button"
+            className="btn btn-outline-primary btn-block"
+            onClick={nextPage}
+          >
+            Next
+          </button>
+        </div>
+      </span>
 
-      <Button onClick={addPage}>Add new page</Button>
+      <button type="button" className="btn btn-primary add-page" onClick={addPage}>
+        Add new page
+      </button>
     </div>
   );
 };

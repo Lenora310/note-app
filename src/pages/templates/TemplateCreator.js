@@ -7,7 +7,7 @@ import { addPageElement } from "../../utilities/addPageElement";
 import { PARENT_ID } from "../../context/types";
 
 export const TemplateCreator = () => {
-  const draftId = 2345; //todo change the constant
+  const draftId = "preview-parent-element-id"; 
 
   const firebase = useContext(FirebaseContext);
   const alert = useContext(AlertContext);
@@ -116,8 +116,9 @@ export const TemplateCreator = () => {
       .then(() => {
         alert.show("Template was created", "success");
       })
-      .catch(() => {
-        alert.show("Something went wrong", "danger");
+      .catch((e) => {
+        console.log(e);
+        alert.show(`Something went wrong: ${e.message}`, "danger");
       });
   };
 
@@ -138,19 +139,18 @@ export const TemplateCreator = () => {
           Publish template
         </label>
       </div>
-      <Button className="btn-save" onClick={() => saveTemplate()}>
+      <button type="button" className="btn btn-primary btn-save" onClick={() => saveTemplate()}>
         Save template
-      </Button>
+      </button>
 
       <Container fluid>
         <Row className="template-creator-row">
           <Col className="template-creator-column add-tools">
-            <Button
-              className="add-tool"
+            <button type="button" className="btn btn-primary add-tool"
               onClick={() => setshowH3input(!showH3input)}
             >
               Add h3
-            </Button>
+            </button>
             {showH3input ? (
               <Form
                 id="addH3Form"
@@ -159,18 +159,16 @@ export const TemplateCreator = () => {
               />
             ) : null}
 
-            <Button
-              className="add-tool"
+            <button type="button" className="btn btn-primary add-tool"
               onClick={() => addElement(draftId, "input", getNewId(), "input")}
             >
               Add input
-            </Button>
-            <Button
-              className="add-tool"
+            </button>
+            <button type="button" className="btn btn-primary add-tool"
               onClick={() => setshowParagraphInput(!showParagraphInput)}
             >
               Add paragraph
-            </Button>
+            </button>
             {showParagraphInput ? (
               <Form
                 id="addParagraphForm"
@@ -179,19 +177,11 @@ export const TemplateCreator = () => {
               />
             ) : null}
 
-            {/* <Button
-              className="add-tool"
-              onClick={() => addElement(draftId, "p", getNewId(), "paragraph")}
-            >
-              Add paragraph
-            </Button> */}
-
-            <Button
-              className="add-tool"
+            <button type="button" className="btn btn-primary add-tool"
               onClick={() => addElement(draftId, "textarea", getNewId(), "")}
             >
               Add text area
-            </Button>
+            </button>
           </Col>
 
           <Col className="col-8 template-creator-column draft">
@@ -204,7 +194,7 @@ export const TemplateCreator = () => {
           <Col className="template-creator-column layers">
             <div className="card">
               <div className="card-header">
-                <strong> Layers </strong>
+                <strong> Elements </strong>
               </div>
 
               <ul className="list-group list-group-flush">

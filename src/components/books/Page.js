@@ -35,7 +35,7 @@ export const Page = ({ bookId, pageId }) => {
 
   return (
     <div>
-      <div id={PARENT_ID}></div>
+      <div className="book-page" id={PARENT_ID}></div>
     </div>
   );
 };

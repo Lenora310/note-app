@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { FirebaseContext } from "../../context/firebase/firebaseContext";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { AlertContext } from "../../context/alert/alertContext";
 import { addPageElement } from "../../utilities/addPageElement";
 import { PARENT_ID } from "../../context/types";
@@ -18,10 +18,7 @@ export const TemplateLoader = () => {
   }, []);
 
   const prevState = useRef({ selected });
-  // useEffect(() => {
-  //   fetchPublicTemplates();
-  //   // eslint-disable-next-line
-  // }, []);
+
 
   useEffect(() => {
     const prevSelEl = document.getElementById(prevState.current.selected);
@@ -60,8 +57,9 @@ export const TemplateLoader = () => {
       .then(() => {
         alert.show("Template was successfully downloaded", "success");
       })
-      .catch(() => {
-        alert.show("Something went wrong", "danger");
+      .catch((e) => {
+        console.log(e);
+        alert.show(`Something went wrong: ${e.message}`, "danger");
       });
   };
 
@@ -92,7 +90,7 @@ export const TemplateLoader = () => {
             <div>
               {selected ? (
                 <div>
-                  <h3 className="instruction">Overview</h3>
+                  <h3 className="text-info">Overview</h3>
                   <h2>{publicTemplates[selected].title}</h2>
                 </div>
               ) : null}
@@ -102,7 +100,7 @@ export const TemplateLoader = () => {
           </Col>
         </Row>
       </Container>
-      <Button onClick={downloadTemplate}>Download template</Button>
+      <button type="button" className="btn btn-primary" onClick={downloadTemplate}>Download template</button>
     </div>
   );
 };

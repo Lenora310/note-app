@@ -18,11 +18,6 @@ const handlers = {
 
   [SET_USER]: (state, { payload }) => ({ ...state, currentUser: payload.user }),
 
-  // [REMOVE_NOTE]: (state, { payload }) => ({
-  //   ...state,
-  //   notes: state.notes.filter((note) => note.id !== payload),
-  // }),
-
   [REMOVE_BOOK]: (state, { payload }) => ({
     ...state,
     books: state.books.filter((book) => book.id !== payload),

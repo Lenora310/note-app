@@ -1,24 +1,4 @@
-// @import "bootstrap/functions";
-// @import "bootstrap/variables";
-
-// /* finally, import Bootstrap */
-// @import "bootstrap";
-
-// $theme-colors: (
-//   "primary": #0074d9,
-//   "danger": #ff4136
-// );
-// $primary: purple;
-// $danger: red;
-
 @import "~bootstrap/scss/bootstrap";
-
-// {component-active-color: purple}
-
-// $theme-colors: (
-//   primary: $purple,
-//   component-active-color: purple
-// );
 
 body {
   margin: 0;
@@ -31,15 +11,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-.note {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 
-  strong {
-    margin-right: 1rem;
-  }
-}
 
 .template-creator-column {
   border-style: solid;
@@ -51,7 +23,9 @@ code {
 }
 
 .instruction {
-  color: green;
+ color: #badbcc;
+// background-color: #d1e7dd;
+// border-color: #badbcc;
 }
 .template-creator-column .list-group-item,
 .book-list .list-group-item {
@@ -88,24 +62,27 @@ code {
   background: #eee;
 }
 
-.template-preview-column h3.instruction {
+.template-preview-column h3.text-info {
   text-align: right;
 }
 .template-preview-column h2 {
   text-align: right;
   border-bottom: 1px solid #ccc;
 }
-.template-preview h3 {
+.book h1  {
+  border-bottom: 1px solid #ccc;
+}
+.template-preview h3{
   font-size: 36px;
 }
-.template-preview p {
+.template-preview p, .book-page p {
   font-size: 16px;
   font-weight: normal;
   margin-top: 20px;
   margin-bottom: 5px;
 }
 .template-preview input,
-.template-preview textarea {
+.template-preview textarea, .book-page input, .book-page textarea{
   width: 75%;
   padding: 8px 15px;
   margin-bottom: 20px;
@@ -114,3 +91,41 @@ code {
 .btn-close {
   float: right;
 }
+
+.information {
+  text-align: center;
+}
+
+.authentication .sign-out{
+  margin: 10em 0em 0em 0em;
+}
+.authentication .information .book-link{
+  color: white;
+  text-decoration: none;
+}
+
+.book-list .list-group .list-group-item {
+  display: flex;
+}
+
+.book-list .list-group .book-link{
+  color: black;
+  text-decoration: none;
+}
+.btn-primary, .book .btn-secondary {
+  margin: 10pt;
+}
+
+.book .add-page{
+  display: block;
+}
+.book-page-content{
+   width: 75%;
+}
+// .book-page-content .btn-group{
+//   width: 75%;
+// }
+// color: #0f5132;
+// background-color: #d1e7dd;
+// border-color: #badbcc;
+

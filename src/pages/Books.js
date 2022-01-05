@@ -23,13 +23,13 @@ export const Books = () => {
   }, [user]);
 
   return (
-    <Fragment>
+    <Fragment className="books-page">
       <h1>Your books</h1>
 
       {loading ? <Loader /> : <BookList />}
 
       <Link to={{ pathname: `/book_creator` }}>
-        <Button>Create new book</Button>
+        <button type="button" className="btn btn-primary">Create new book</button>
       </Link>
     </Fragment>
   );

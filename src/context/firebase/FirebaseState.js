@@ -34,13 +34,6 @@ export const FirebaseState = ({ children }) => {
   const closeLoader = () => dispatch({ type: CLOSE_LOADER });
   const setUser = (user) => dispatch({ type: SET_USER, payload: { user } });
 
-  // const removeNote = async (id) => {
-  //   await axios.delete(`${url}/notes/${id}.json`);
-  //   dispatch({
-  //     type: REMOVE_NOTE,
-  //     payload: id,
-  //   });
-  // };
 
   const fetchBooks = async () => {
     if (!state.currentUser) {

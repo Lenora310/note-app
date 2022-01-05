@@ -22,8 +22,9 @@ export const SignIn = () => {
       .then(() => {
         alert.show("You have successfully logged in", "success");
       })
-      .catch(() => {
-        alert.show("Something went wrong", "danger");
+      .catch((e) => {
+        console.log(e);
+        alert.show(`Something went wrong: ${e.message}`, "danger");
       });
   };
 
@@ -50,12 +51,6 @@ export const SignIn = () => {
         />
         <label htmlFor="floatingPasswordSignIn">Password</label>
       </div>
-
-      {/* <div className="checkbox mb-3">
-        <label>
-          <input type="checkbox" value="remember-me" /> Remember me
-        </label>
-      </div> */}
       <button className="w-100 btn btn-lg btn-primary sign" type="submit">
         Sign in
       </button>

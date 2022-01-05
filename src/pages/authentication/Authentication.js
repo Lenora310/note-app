@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { SignIn } from "./SignIn";
 import { SignUp } from "./SignUp";
 import { onAuthStateChanged, signOut } from "firebase/auth";
@@ -24,45 +25,33 @@ export const Authentication = () => {
       .then(() => {
         alert.show("You was successfully logged out", "success");
       })
-      .catch(() => {
-        alert.show("Something went wrong", "danger");
+      .catch((e) => {
+        console.log(e);
+        alert.show(`Something went wrong: ${e.message}`, "danger");
       });
   };
 
   return (
-    <div>
+    <div className="authentication">
       {firebase.user ? (
         <div>
-          <h2>Hello, {firebase.user.email}</h2>
+          <div className="information">
+            <h2>Hello, {firebase.user.email}</h2>
+            <h3>
+              Welcome! To start creating your own notes, go to the book page.
+            </h3>
 
-          <button className="btn btn-secondary" onClick={logOut}>
+            <button className="btn btn-primary">
+              <Link className="book-link" to={{ pathname: `/books` }}>Go to books</Link>
+            </button>
+          </div>
+
+          <button className="btn btn-secondary sign-out" onClick={logOut}>
             Sign Out
           </button>
         </div>
       ) : (
         <div>
-          {/* <ul className="nav nav-tabs">
-            <li className="active">
-              <a data-toggle="tab" href="#signIn">
-                Sign in
-              </a>
-            </li>
-            <li>
-              <a data-toggle="tab" href="#signUp">
-                Sign up
-              </a>
-            </li>
-          </ul>
-
-          <div className="tab-content">
-            <div id="signIn" className="tab-pane fade in active">
-              <SignIn />
-            </div>
-            <div id="signUp" className="tab-pane fade">
-              <SignUp />
-            </div>
-          </div> */}
-
           <button className="btn btn-light" onClick={() => setSignIn(true)}>
             Sign in
           </button>

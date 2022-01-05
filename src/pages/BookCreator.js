@@ -63,19 +63,24 @@ export const BookCreator = () => {
       .then(() => {
         alert.show("Book was created", "success");
       })
-      .catch(() => {
-        alert.show("Something went wrong", "danger");
+      .catch((e) => {
+        console.log(e);
+        alert.show(`Something went wrong: ${e.message}`, "danger");
       });
   };
 
   return (
     <div>
+      
       <Link to={{ pathname: `/books` }}>
         <button type="button" className="btn btn-secondary">
           Back to your books
         </button>
       </Link>
-      <h1 className="instruction"> Choose from your templates </h1>
+      
+    <h1 className=""> Book creation</h1>
+
+      <h2 className="text-info"> Choose from your templates </h2>
 
       <Container fluid>
         <Row>
@@ -105,22 +110,22 @@ export const BookCreator = () => {
         </Row>
       </Container>
 
-      <h1 className="instruction"> or</h1>
+      <h2 className="text-info"> or</h2>
       <Link to={{ pathname: `/template_creator` }}>
-        <Button>Create new template</Button>
+        <button type="button" className="btn btn-primary">Create new template</button>
       </Link>
 
       <Link to={{ pathname: `/template_loader` }}>
-        <Button>Download public template</Button>
+        <button type="button" className="btn btn-primary">Download public template</button>
       </Link>
 
-      <h1 className="instruction"> Choose a title for your new book</h1>
+      <h2 className="text-info"> Choose a title for your new book</h2>
       <Form saveValue={setBookTitle} placeholder="Write title" />
 
-      <h2 className="instruction">Title: </h2>
+      <h2 className="text-info">Title: </h2>
       <h2>{bookTitle}</h2>
 
-      <Button onClick={createBook}>Create new book</Button>
+      <button type="button" className="btn btn-primary" onClick={createBook}>Create new book</button>
     </div>
   );
 };
