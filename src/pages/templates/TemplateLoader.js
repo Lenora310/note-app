@@ -19,7 +19,6 @@ export const TemplateLoader = () => {
 
   const prevState = useRef({ selected });
 
-
   useEffect(() => {
     const prevSelEl = document.getElementById(prevState.current.selected);
     if (prevSelEl) {
@@ -53,7 +52,7 @@ export const TemplateLoader = () => {
     }
   }, [selected]);
   const downloadTemplate = () => {
-    if(!selected){
+    if (!selected) {
       alert.show("Please select template");
       return;
     }
@@ -104,7 +103,13 @@ export const TemplateLoader = () => {
           </Col>
         </Row>
       </Container>
-      <button type="button" className="btn btn-primary" onClick={downloadTemplate}>Download template</button>
+      <button
+        type="button"
+        className="btn btn-primary"
+        onClick={downloadTemplate}
+      >
+        Download template
+      </button>
     </div>
   );
 };

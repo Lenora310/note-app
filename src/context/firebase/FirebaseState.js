@@ -36,14 +36,12 @@ export const FirebaseState = ({ children }) => {
 
   const fetchBooks = async () => {
     if (!state.currentUser) {
-      console.log("USER IS NOT DEFINED!");
       return;
     }
     showLoader();
     const res = await axios.get(
       `${url}/users/${state.currentUser.uid}/books.json`
     );
-    console.log("fetchBooks", res.data);
 
     if (res.data) {
       const newBooks = [];
@@ -71,7 +69,6 @@ export const FirebaseState = ({ children }) => {
         `${url}/users/${state.currentUser.uid}/books.json`,
         book
       );
-      console.log("addBook", res.data);
       const payload = {
         book,
         bookId: res.data.name,
@@ -127,7 +124,6 @@ export const FirebaseState = ({ children }) => {
       const payload = {
         templates: newTemplates,
       };
-      console.log("fetch templates payload=", payload);
       dispatch({
         type: FETCH_PUBLIC_TEMPLATES,
         payload,
@@ -146,7 +142,6 @@ export const FirebaseState = ({ children }) => {
         `${url}/users/${state.currentUser.uid}/templates.json`,
         template
       );
-      console.log("addTemplate", res.data);
       const payload = {
         template,
         templateId: res.data.name,
@@ -171,8 +166,7 @@ export const FirebaseState = ({ children }) => {
       elements,
     };
     try {
-      const res = await axios.post(`${url}/templates.json`, template);
-      console.log("publishTemplate", res.data);
+      await axios.post(`${url}/templates.json`, template);
     } catch (e) {
       throw new Error(e.message);
     }
@@ -180,7 +174,6 @@ export const FirebaseState = ({ children }) => {
 
   const downloadPublicTemplate = async (templateId) => {
     const res = await axios.get(`${url}/templates/${templateId}.json`);
-    console.log("downloadPublicTemplate", res.data);
     addTemplate(res.data.title, res.data.elements);
   };
 
@@ -193,7 +186,6 @@ export const FirebaseState = ({ children }) => {
         `${url}/users/${state.currentUser.uid}/books/${bookId}/pages.json`,
         page
       );
-      console.log("addPage", pageRes.data);
 
       const payload = {
         pageId: pageRes.data.name,
@@ -218,11 +210,10 @@ export const FirebaseState = ({ children }) => {
     newValues[elementId] = elementValue;
 
     try {
-      const res = await axios.put(
+      await axios.put(
         `${url}/users/${state.currentUser.uid}/books/${bookId}/pages/${pageId}/values.json`,
         newValues
       );
-      console.log("addPageValue", res.data);
       const payload = {
         bookId,
         pageId,

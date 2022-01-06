@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { FirebaseContext } from "../context/firebase/firebaseContext";
 import { Link } from "react-router-dom";
-import {  Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { Form } from "../components/form/Form";
 import { AlertContext } from "../context/alert/alertContext";
 import { PARENT_ID } from "../context/types";
@@ -17,9 +17,7 @@ export const BookCreator = () => {
   const prevState = useRef({ selectedTemplate });
 
   useEffect(() => {
-    fetchTemplates().then(() => {
-      console.log("B_Creator templates=", templates);
-    });
+    fetchTemplates();
     // eslint-disable-next-line
   }, []);
 
@@ -59,7 +57,7 @@ export const BookCreator = () => {
   }, [selectedTemplate]);
 
   const createBook = () => {
-    if(!selectedTemplate || !bookTitle){
+    if (!selectedTemplate || !bookTitle) {
       alert.show("Please select template and write title");
       return;
     }
@@ -75,14 +73,13 @@ export const BookCreator = () => {
 
   return (
     <div>
-      
       <Link to={{ pathname: `/books` }}>
         <button type="button" className="btn btn-secondary">
           Back to your books
         </button>
       </Link>
-      
-    <h1 className=""> Book creation</h1>
+
+      <h1 className=""> Book creation</h1>
 
       <h2 className="text-info"> Choose from your templates </h2>
 
@@ -116,11 +113,15 @@ export const BookCreator = () => {
 
       <h2 className="text-info"> or</h2>
       <Link to={{ pathname: `/template_creator` }}>
-        <button type="button" className="btn btn-primary">Create new template</button>
+        <button type="button" className="btn btn-primary">
+          Create new template
+        </button>
       </Link>
 
       <Link to={{ pathname: `/template_loader` }}>
-        <button type="button" className="btn btn-primary">Download public template</button>
+        <button type="button" className="btn btn-primary">
+          Download public template
+        </button>
       </Link>
 
       <h2 className="text-info"> Choose a title for your new book</h2>
@@ -129,7 +130,9 @@ export const BookCreator = () => {
       <h2 className="text-info">Title: </h2>
       <h2>{bookTitle}</h2>
 
-      <button type="button" className="btn btn-primary" onClick={createBook}>Create new book</button>
+      <button type="button" className="btn btn-primary" onClick={createBook}>
+        Create new book
+      </button>
     </div>
   );
 };

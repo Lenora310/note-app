@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Container, Row } from "react-bootstrap";
 import { AlertContext } from "../../context/alert/alertContext";
@@ -19,7 +19,7 @@ export const BookList = () => {
       .catch((e) => {
         console.log(e);
         alert.show(`Something went wrong: ${e.message}`, "danger");
-      }); 
+      });
   };
 
   return (
@@ -33,11 +33,9 @@ export const BookList = () => {
               role="tab"
               data-bs-toggle="list"
             >
-            
-              
-                <Link className="book-link" to={{ pathname: `/books/${id}` }}>
-                  <strong>{books[id].title}</strong>
-                  <button
+              <Link className="book-link" to={{ pathname: `/books/${id}` }}>
+                <strong>{books[id].title}</strong>
+                <button
                   type="button"
                   className="btn btn-close"
                   aria-label="Close"
@@ -45,9 +43,7 @@ export const BookList = () => {
                     deleteBook(event, id);
                   }}
                 ></button>
-                </Link>
-                
-            
+              </Link>
             </Row>
           );
         })}

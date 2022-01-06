@@ -4,11 +4,10 @@ import { FirebaseContext } from "../../context/firebase/firebaseContext";
 import { Link } from "react-router-dom";
 
 export const Book = (props) => {
-  const { books, setUser } = useContext(FirebaseContext);
+  const { books } = useContext(FirebaseContext);
   const { addBookPage } = useContext(FirebaseContext);
 
   const [id] = useState(props.match.params.id);
-  // const [title] = useState(books[id].title);
 
   const [pages, setPages] = useState(Object.keys(books[id].pages));
 
@@ -33,14 +32,6 @@ export const Book = (props) => {
   useEffect(() => {
     setCurrentPage(pages.length - 1);
   }, [pages.length]);
-
-  // useEffect(() => {
-  //   onAuthStateChanged(auth, (currentUser) => {
-  //     setUser(currentUser);
-  //   });
-  //   setPages(Object.keys(books[id].pages));
-  //   // eslint-disable-next-line
-  // }, []);
 
   return (
     <div className="book">
@@ -73,7 +64,11 @@ export const Book = (props) => {
         </div>
       </span>
 
-      <button type="button" className="btn btn-primary add-page" onClick={addPage}>
+      <button
+        type="button"
+        className="btn btn-primary add-page"
+        onClick={addPage}
+      >
         Add new page
       </button>
     </div>

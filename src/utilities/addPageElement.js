@@ -1,4 +1,3 @@
-
 export const addPageElement = (parentId, elementTag, elementId, html) => {
   let parentElement = document.getElementById(parentId);
   let elementToAdd = document.createElement(elementTag);

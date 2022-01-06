@@ -9,7 +9,7 @@ import { FirebaseContext } from "../../context/firebase/firebaseContext";
 
 export const Authentication = () => {
   const alert = useContext(AlertContext);
-  const {setUser, user} = useContext(FirebaseContext);
+  const { setUser, user } = useContext(FirebaseContext);
 
   const [signIn, setSignIn] = useState(false);
 
@@ -41,7 +41,9 @@ export const Authentication = () => {
             </h3>
 
             <button className="btn btn-primary">
-              <Link className="book-link" to={{ pathname: `/books` }}>Go to books</Link>
+              <Link className="book-link" to={{ pathname: `/books` }}>
+                Go to books
+              </Link>
             </button>
           </div>
 

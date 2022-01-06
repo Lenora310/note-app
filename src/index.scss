@@ -12,7 +12,6 @@ code {
     monospace;
 }
 
-
 .template-creator-column {
   border-style: solid;
   border-width: 1px;
@@ -20,12 +19,6 @@ code {
 }
 .template-creator-row {
   height: 100vh;
-}
-
-.instruction {
- color: #badbcc;
-// background-color: #d1e7dd;
-// border-color: #badbcc;
 }
 .template-creator-column .list-group-item,
 .book-list .list-group-item {
@@ -69,20 +62,23 @@ code {
   text-align: right;
   border-bottom: 1px solid #ccc;
 }
-.book h1  {
+.book h1 {
   border-bottom: 1px solid #ccc;
 }
-.template-preview h3{
+.template-preview h3 {
   font-size: 36px;
 }
-.template-preview p, .book-page p {
+.template-preview p,
+.book-page p {
   font-size: 16px;
   font-weight: normal;
   margin-top: 20px;
   margin-bottom: 5px;
 }
 .template-preview input,
-.template-preview textarea, .book-page input, .book-page textarea{
+.template-preview textarea,
+.book-page input,
+.book-page textarea {
   width: 75%;
   padding: 8px 15px;
   margin-bottom: 20px;
@@ -96,14 +92,14 @@ code {
   text-align: center;
 }
 
-.authentication .sign-out{
+.authentication .sign-out {
   margin: 10em 0em 0em 0em;
 }
-.authentication .btn-light{
+.authentication .btn-light {
   margin: 5pt;
 }
 
-.authentication .information .book-link{
+.authentication .information .book-link {
   color: white;
   text-decoration: none;
 }
@@ -112,27 +108,28 @@ code {
   display: flex;
 }
 
-.book-list .list-group .book-link{
+.book-list .list-group .book-link {
   color: black;
   text-decoration: none;
 }
-.btn-primary, .book .btn-secondary {
+.btn-primary,
+.book .btn-secondary {
   margin: 10pt;
 }
 
-.book .add-page{
+.book .add-page {
   display: block;
 }
-.book-page-content{
-   width: 75%;
+.book-page-content {
+  width: 75%;
 }
 
-.alert-dismissible{
-  position:fixed; 
+.alert-dismissible {
+  position: fixed;
   width: 70%;
   height: 45pt;
   z-index: 10;
 }
-.template-creator .form-check{
+.template-creator .form-check {
   margin: 10pt 0 0 0;
 }

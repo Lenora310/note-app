@@ -9,7 +9,7 @@ import { PARENT_ID } from "../../context/types";
 export const TemplateCreator = () => {
   const draftId = "preview-parent-element-id";
 
-  const {addTemplate} = useContext(FirebaseContext);
+  const { addTemplate } = useContext(FirebaseContext);
   const alert = useContext(AlertContext);
 
   const [title, setTitle] = useState("");
@@ -91,7 +91,7 @@ export const TemplateCreator = () => {
     setshowParagraphInput(false);
   };
   const saveTemplate = () => {
-    if(!title || elements.length<=1){
+    if (!title || elements.length <= 1) {
       alert.show("Please write title and add elements");
       return;
     }

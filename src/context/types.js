@@ -19,4 +19,4 @@ export const ADD_TEMPLATE = "ADD_TEMPLATE";
 export const FETCH_TEMPLATES = "FETCH_TEMPLATES";
 export const FETCH_PUBLIC_TEMPLATES = "FETCH_PUBLIC_TEMPLATES";
 
-export const PARENT_ID='templates-parent-element-id'
+export const PARENT_ID = "templates-parent-element-id";

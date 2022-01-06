@@ -1,6 +1,10 @@
 import React, { useContext, useState } from "react";
 import { AlertContext } from "../../context/alert/alertContext";
-import { setPersistence, signInWithEmailAndPassword, browserSessionPersistence  } from "firebase/auth";
+import {
+  setPersistence,
+  signInWithEmailAndPassword,
+  browserSessionPersistence,
+} from "firebase/auth";
 import { auth } from "../../firebase-config";
 
 export const SignIn = () => {
@@ -26,15 +30,6 @@ export const SignIn = () => {
           alert.show(`Something went wrong: ${e.message}`, "danger");
         });
     });
-
-    // signInWithEmailAndPassword(auth, loginValue, passwordValue)
-    //   .then(() => {
-    //     alert.show("You have successfully logged in", "success");
-    //   })
-    //   .catch((e) => {
-    //     console.log(e);
-    //     alert.show(`Something went wrong: ${e.message}`, "danger");
-    //   });
   };
 
   return (
