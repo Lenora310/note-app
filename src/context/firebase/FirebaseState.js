@@ -34,7 +34,6 @@ export const FirebaseState = ({ children }) => {
   const closeLoader = () => dispatch({ type: CLOSE_LOADER });
   const setUser = (user) => dispatch({ type: SET_USER, payload: { user } });
 
-
   const fetchBooks = async () => {
     if (!state.currentUser) {
       console.log("USER IS NOT DEFINED!");
@@ -44,6 +43,7 @@ export const FirebaseState = ({ children }) => {
     const res = await axios.get(
       `${url}/users/${state.currentUser.uid}/books.json`
     );
+    console.log("fetchBooks", res.data);
 
     if (res.data) {
       const newBooks = [];
@@ -88,15 +88,16 @@ export const FirebaseState = ({ children }) => {
 
   const removeBook = async (id) => {
     try {
-       await axios.delete(`${url}/users/${state.currentUser.uid}/books/${id}.json`);
-    dispatch({
-      type: REMOVE_BOOK,
-      payload: id,
-    });
+      await axios.delete(
+        `${url}/users/${state.currentUser.uid}/books/${id}.json`
+      );
+      dispatch({
+        type: REMOVE_BOOK,
+        payload: id,
+      });
     } catch (e) {
       throw new Error(e.message);
     }
-   
   };
 
   const fetchTemplates = async () => {

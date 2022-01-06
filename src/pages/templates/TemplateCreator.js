@@ -118,7 +118,7 @@ export const TemplateCreator = () => {
   };
 
   return (
-    <div>
+    <div className="template-creator">
       <h1>Create template</h1>
       <h3>{title}</h3>
       <Form saveValue={setTitle} placeholder="Write template title" />
