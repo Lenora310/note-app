@@ -53,6 +53,10 @@ export const TemplateLoader = () => {
     }
   }, [selected]);
   const downloadTemplate = () => {
+    if(!selected){
+      alert.show("Please select template");
+      return;
+    }
     downloadPublicTemplate(selected)
       .then(() => {
         alert.show("Template was successfully downloaded", "success");

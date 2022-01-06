@@ -9,13 +9,13 @@ import { FirebaseContext } from "../../context/firebase/firebaseContext";
 
 export const Authentication = () => {
   const alert = useContext(AlertContext);
-  const firebase = useContext(FirebaseContext);
+  const {setUser, user} = useContext(FirebaseContext);
 
   const [signIn, setSignIn] = useState(false);
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
-      firebase.setUser(currentUser);
+      setUser(currentUser);
     });
   }, []);
 
@@ -32,10 +32,10 @@ export const Authentication = () => {
 
   return (
     <div className="authentication">
-      {firebase.user ? (
+      {user ? (
         <div>
           <div className="information">
-            <h2>Hello, {firebase.user.email}</h2>
+            <h2>Hello, {user.email}</h2>
             <h3>
               Welcome! To start creating your own notes, go to the book page.
             </h3>

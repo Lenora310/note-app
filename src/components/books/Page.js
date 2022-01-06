@@ -4,11 +4,11 @@ import { PARENT_ID } from "../../context/types";
 import { addPageElement } from "../../utilities/addPageElement";
 
 export const Page = ({ bookId, pageId }) => {
-  const firebase = useContext(FirebaseContext);
-  const [template] = useState(firebase.books[bookId].template);
+  const {books, addPageValue,} = useContext(FirebaseContext);
+  const [template] = useState(books[bookId].template);
 
   const saveInputValue = (event) => {
-    firebase.addPageValue(bookId, pageId, event.target.id, event.target.value);
+    addPageValue(bookId, pageId, event.target.id, event.target.value);
   };
 
   useEffect(() => {
@@ -22,12 +22,12 @@ export const Page = ({ bookId, pageId }) => {
         document.getElementById(el.elementId).onchange = saveInputValue;
       }
     });
-    Object.keys(firebase.books[bookId].pages[pageId].values).forEach(
+    Object.keys(books[bookId].pages[pageId].values).forEach(
       (elementId) => {
         const elementToFill = document.getElementById(elementId);
         if (elementToFill) {
           elementToFill.value =
-            firebase.books[bookId].pages[pageId].values[elementId];
+            books[bookId].pages[pageId].values[elementId];
         }
       }
     );

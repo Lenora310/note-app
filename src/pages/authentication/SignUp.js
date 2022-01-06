@@ -34,7 +34,7 @@ export const SignUp = () => {
 
   return (
     <form className="sign-up-form" onSubmit={signUp}>
-      <h1 className="h3 mb-3 fw-normal">Sign up</h1>
+      <h1 className="h1 mb-3 fw-normal">Sign up</h1>
 
       <div className="form-floating">
         <input

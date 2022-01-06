@@ -9,8 +9,8 @@ export const BookList = () => {
   const alert = useContext(AlertContext);
 
   const deleteBook = (event, bookId) => {
-    // event.preventDefault();
-    // event.stopPropagation();
+    event.preventDefault();
+    event.stopPropagation();
     removeBook(bookId)
       .then(() => {
         alert.show("Book was deleted", "success");

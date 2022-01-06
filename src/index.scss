@@ -99,6 +99,10 @@ code {
 .authentication .sign-out{
   margin: 10em 0em 0em 0em;
 }
+.authentication .btn-light{
+  margin: 5pt;
+}
+
 .authentication .information .book-link{
   color: white;
   text-decoration: none;
@@ -121,4 +125,11 @@ code {
 }
 .book-page-content{
    width: 75%;
+}
+
+.alert-dismissible{
+  position:fixed; 
+  width: 70%;
+  height: 45pt;
+  z-index: 10;
 }

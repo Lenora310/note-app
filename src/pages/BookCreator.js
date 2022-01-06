@@ -59,6 +59,10 @@ export const BookCreator = () => {
   }, [selectedTemplate]);
 
   const createBook = () => {
+    if(!selectedTemplate || !bookTitle){
+      alert.show("Please select template and write title");
+      return;
+    }
     addBook(bookTitle, templates[selectedTemplate])
       .then(() => {
         alert.show("Book was created", "success");
